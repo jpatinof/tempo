@@ -6,9 +6,9 @@
 		<groupId>com.cromasoft</groupId>
 		<artifactId>ostheoPhoenix</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../OsteoPhoenix</relativePath>
+		<relativePath>../Tempo</relativePath>
 	</parent>
-	<artifactId>CFCommon</artifactId>
+	<artifactId>TempoCommon</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>

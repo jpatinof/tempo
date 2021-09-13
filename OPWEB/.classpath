@@ -17,16 +17,21 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPModel"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPEJBClient"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPConfig"/>
 	<classpathentry kind="lib" path="C:/glassfish5/glassfish/lib/javaee.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoConfig"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoEJBClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoModel"/>
+	<classpathentry kind="con" path="org.eclipse.glassfish.tools.lib.system">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_291">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

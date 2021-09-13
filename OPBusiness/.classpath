@@ -17,8 +17,8 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPDao"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPModel"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoDao"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoModel"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

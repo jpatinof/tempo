@@ -8,11 +8,11 @@
 		<groupId>com.cromasoft</groupId>
 		<artifactId>ostheoPhoenix</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../OsteoPhoenix</relativePath>
+		<relativePath>../Tempo</relativePath>
 	</parent>
-	<artifactId>CFWEB</artifactId>
+	<artifactId>TempoWEB</artifactId>
 	<packaging>war</packaging>
-	<name>CFWEB Maven Webapp</name>
+	<name>TempoWEB Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -33,7 +33,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>CFWEB</finalName>
+		<finalName>TempoWEB</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

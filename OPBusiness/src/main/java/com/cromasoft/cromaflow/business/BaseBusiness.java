@@ -43,9 +43,6 @@ public class BaseBusiness
 	/** Propiedad im error messages. */
 	private static Messages im_errorMessages;
 
-	/** Propiedad il licencia. */
-	private License il_licencia;
-
 	/**
 	 * Retorna el valor de error messages.
 	 *

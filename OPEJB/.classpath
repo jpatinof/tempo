@@ -12,10 +12,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPModel"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPBusiness"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OPEJBClient"/>
 	<classpathentry kind="con" path="org.eclipse.glassfish.tools.lib.system">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.ejb"/>
@@ -28,5 +24,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/glassfish5/glassfish/lib/javaee.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoBusiness"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoEJBClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TempoModel"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

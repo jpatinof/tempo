@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>OPEAR</name>
+	<name>TempoEAR</name>
 	<comment></comment>
 	<projects>
-		<project>OPBusiness</project>
 		<project>OPCommon</project>
 		<project>OPConfig</project>
 		<project>OPEJB</project>
@@ -12,6 +11,10 @@
 		<project>OPModel</project>
 		<project>OPScheduler</project>
 		<project>OPWEB</project>
+		<project>TempoBusiness</project>
+		<project>TempoCommon</project>
+		<project>TempoConfig</project>
+		<project>TempoDao</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -6,13 +6,13 @@
 		<groupId>com.cromasoft</groupId>
 		<artifactId>ostheoPhoenix</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../OsteoPhoenix</relativePath>
+		<relativePath>../Tempo</relativePath>
 	</parent>
-	<artifactId>CFModel</artifactId>
+	<artifactId>TempoModel</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.cromasoft</groupId>
-			<artifactId>CFCommon</artifactId>
+			<artifactId>TempoCommon</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 	</dependencies>

@@ -6,8 +6,8 @@
 		<groupId>com.cromasoft</groupId>
 		<artifactId>ostheoPhoenix</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../OsteoPhoenix</relativePath>
+		<relativePath>../Tempo</relativePath>
 	</parent>
-	<artifactId>CFEJBClient</artifactId>
+	<artifactId>TempoEJBClient</artifactId>
 	<packaging>ejb</packaging>
 </project>

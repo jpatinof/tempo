@@ -6,17 +6,16 @@
   <version>1.0.0</version>
   <packaging>pom</packaging>
   <modules>
-  	<module>../OPBusiness</module>
-  	<module>../OPCommon</module>
-  	<module>../OPDao</module>
-  	<module>../OPDelegate</module>
-  	<module>../OPEAR</module>
-  	<module>../OPEJB</module>
-  	<module>../OPEJBClient</module>
-  	<module>../OPModel</module>
-  	<module>../OPWEB</module>
-  	<module>../OPScheduler</module>
-  	<module>../OPConfig</module>
-  	<module>OPScheduler</module>
+  	<module>../TempoBusiness</module>
+  	<module>../TempoCommon</module>
+  	<module>../TempoDao</module>
+  	<module>../TempoDelegate</module>
+  	<module>../TempoEAR</module>
+  	<module>../TempoEJB</module>
+  	<module>../TempoEJBClient</module>
+  	<module>../TempoModel</module>
+  	<module>../TempoWEB</module>
+  	<module>../TempoScheduler</module>
+  	<module>../TempoConfig</module>
   </modules>
 </project>

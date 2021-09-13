@@ -2,7 +2,7 @@
     <wb-module deploy-name="CFEAR-1.0.0">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="CFBusiness-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPBusiness/OPBusiness">
+        <dependent-module archiveName="TempoBusiness-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoBusiness/TempoBusiness">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="json-20140107.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20140107/json-20140107.jar">
@@ -50,7 +50,7 @@
         <dependent-module archiveName="commons-io-2.8.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.8.0/commons-io-2.8.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFCommon-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPCommon/OPCommon">
+        <dependent-module archiveName="TempoCommon-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoCommon/TempoCommon">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="poi-ooxml-3.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi-ooxml/3.7/poi-ooxml-3.7.jar">
@@ -83,25 +83,25 @@
         <dependent-module archiveName="jsch-0.1.54.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/jcraft/jsch/0.1.54/jsch-0.1.54.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFConfig-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPConfig/OPConfig">
+        <dependent-module archiveName="TempoConfig-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoConfig/TempoConfig">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFDao-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPDao/OPDao">
+        <dependent-module archiveName="TempoDao-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoDao/TempoDao">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ojdbc10-19.8.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/oracle/database/jdbc/ojdbc10/19.8.0.0/ojdbc10-19.8.0.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFEJB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPEJB/OPEJB">
+        <dependent-module archiveName="TempoEJB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoEJB/TempoEJB">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFEJBClient-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPEJBClient/OPEJBClient">
+        <dependent-module archiveName="TempoEJBClient-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoEJBClient/TempoEJBClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFModel-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPModel/OPModel">
+        <dependent-module archiveName="TempoModel-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoModel/TempoModel">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="CFWEB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPWEB/OPWEB">
+        <dependent-module archiveName="TempoWEB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/TempoWEB/TempoWEB">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
