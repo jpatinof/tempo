@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelDispositivosAdicionales}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelDispositivosAdicionalesDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fDispositivosAdicionalesDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<ui:param name="bean" value="#{beanDispositivosAdicionales}" />
+
+				<p:panel
+					header="#{messageBeanSNR.commonLabelDispositivosAdicionalesDetalle}"
+					closable="false" style="text-align: center;">
+
+					<!-- Panel datos basicos -->
+					<p:panel
+						header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olNumeroSolicitud"
+											value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otnumeroSolicitud" readonly="true"
+											value="#{beanDispositivosAdicionales.solicitud.numeroSolicitud}" />
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaTomografia"
+											value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaTomografia" readonly="true"
+											value="#{beanDispositivosAdicionales.itemSeleccionado.fechaTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaVencimientoTomografia"
+											value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaVencimientoTomografia" readonly="true"
+											value="#{beanDispositivosAdicionales.itemSeleccionado.fechaVencimientoTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olZonaATratar"
+											value="#{messageBeanSNR.commonLabelInicialZonaATratar}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otZonaTratar" readonly="true"
+											value="#{beanDispositivosAdicionales.solicitud.zonaTratar}">
+										</p:inputText>
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olPaciente"
+											value="#{messageBeanSNR.commonLabelIdentificadorPaciente}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otPaciente" readonly="true"
+											value="#{beanDispositivosAdicionales.solicitud.inicialesPaciente}">
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<ui:include src="uploadDocumentation.xhtml" />
+
+					<!-- Panel Validacion en fabrica dispositivos físicos 
+					<p:panel header="#{messageBeanSNR.commonLabelDispositivosFisicos}"
+						closable="false" style="text-align: center;">-->
+
+					<!-- Panel Validacion en fabrica dispositivos físicos -->
+					<p:panel id="panelVDF"
+						header="#{messageBeanSNR.commonLabelValidacionEnFabricaDispositivosFisicos}"
+						style="min-width:800px; text-align: center !important;">
+						<p:dataTable emptyMessage=""
+							value="#{beanDispositivosAdicionales.dispositivosFisicos}"
+							var="item" tableStyle="width:auto">
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelDispositivosFisicos}">
+								<p:selectOneMenu id="somDispositivosFisicos"
+									value="#{item.dispositivoFisico}" disabled="#{!item.iniciado}"
+									title="#{tooltipBeanSNR.procesosDispositivosFisicos}"
+									style="width: 100% !important">
+									<f:selectItem
+										itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+										itemValue="#{null}" />
+									<f:selectItems
+										value="#{beanDispositivosAdicionales.tiposDispositivosFisicos}"
+										var="var" itemValue="#{var.codigo}"
+										itemLabel="#{var.etiqueta}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelRecepcion}">
+								<p:selectOneMenu id="somRecepcion" value="#{item.recepcion}"
+									disabled="true" style="width: 100% !important"
+									title="#{tooltipBeanSNR.procesosDispositivosFisicosRecepcion}">
+									<f:selectItem
+										itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+										itemValue="#{null}" />
+									<f:selectItems
+										value="#{beanDispositivosAdicionales.tiposRecepcion}"
+										var="var" itemValue="#{var.codigo}"
+										itemLabel="#{var.etiqueta}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelEstadoProducto}">
+								<p:selectOneMenu id="somEstadoProducto"
+									value="#{item.estadoProducto}" disabled="#{item.iniciado}"
+									title="#{tooltipBeanSNR.procesosDispositivosFisicosEstadoProducto}"
+									style="width: 100% !important">
+									<f:selectItem
+										itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+										itemValue="#{null}" />
+									<f:selectItems
+										value="#{beanDispositivosAdicionales.tiposEstadoProducto}"
+										var="var" itemValue="#{var.codigo}"
+										itemLabel="#{var.etiqueta}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelFechaRecibido}">
+								<p:calendar id="cFecha" mask="true" locale="es"
+									placeholder="DD/MM/AAAA" pattern="dd/MM/yyyy" showOn="button"
+									value="#{item.fechaRecibido}" disabled="#{item.iniciado}"
+									title="#{tooltipBeanSNR.administracionConstantesFecha}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelObservaciones}">
+								<p:inputText id="itObservaciones" value="#{item.observaciones}"
+									onblur="value=value.toUpperCase()"
+									title="#{tooltipBeanSNR.procesosDispositivosAdicionalesObservaciones}" />
+							</p:column>
+							<p:column style="width: 2%;"
+								headerText="#{messageBeanSNR.commonButtonEnviar}">
+								<p:selectBooleanCheckbox disabled="#{!item.iniciado}"
+									value="#{item.enviar}" />
+							</p:column>
+							<p:column style="width: 5%;"
+								headerText="#{messageBeanSNR.commonLabelAccion}">
+								<p:commandButton icon="fa fa-trash" iconPos="center"
+									update="fDispositivosAdicionalesDetalle:panelVDF"
+									actionListener="#{beanDispositivosAdicionales.eliminarDispositivoFisico(item)}"
+									title="#{tooltipBeanSNR.procesosDispositivosAdicionalesEliminar}" />
+								<p:commandButton icon="fa fa-save" iconPos="center"
+									update="fDispositivosAdicionalesDetalle:panelVDF, fDispositivosAdicionalesDetalle:idGrowl"
+									actionListener="#{beanDispositivosAdicionales.salvarDispositivosFisicos(item)}"
+									title="#{tooltipBeanSNR.procesosDispositivosAdicionalesSalvar}" />
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton icon="fa fa-plus-circle" iconPos="right"
+							update="fDispositivosAdicionalesDetalle:panelVDF"
+							actionListener="#{beanDispositivosAdicionales.agregarDispositivoFisico}"
+							value="#{messageBeanSNR.commonButtonAgregar}" />
+
+					</p:panel>
+					<!-- Panel botones -->
+					<p:outputPanel id="opBotones">
+						<div class="ui-g">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanDispositivosAdicionales.volverBandeja}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonSalvar}"
+									icon="fa fa-check" update="idGrowl"
+									action="#{beanDispositivosAdicionales.salvarBandeja}" />
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

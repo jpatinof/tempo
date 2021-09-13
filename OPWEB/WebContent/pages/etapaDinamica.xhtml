@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelFormulariosDinamicos}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelCrearFormulario}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fRadicacionSolicitud" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:outputPanel id="opRadicacionSolicitudProductos">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:dataTable id="dtDocuments" var="document"
+								emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+								value="#{beanEtapaDinamica.documentsDynamicForms}">
+								<p:column
+									headerText="#{messageBeanSNR.commonLabelInstructivoParaCargarFormulariosDinamicos}"
+									style="text-align: center !important;">
+									<p:commandLink id="guideDownload" ajax="false">
+										<p:graphicImage value="/images/pdf.png" width="48" />
+										<p:fileDownload value="#{document.guide}" />
+									</p:commandLink>
+								</p:column>
+								<p:column
+									headerText="#{messageBeanSNR.commonLabelPlantillaFormulariosDinamicos}"
+									style="text-align: center !important;">
+									<p:commandLink id="templateDownload" ajax="false">
+										<p:graphicImage value=".../images/excel_ico.png" width="48" />
+										<p:fileDownload value="#{document.template}" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olUF"
+								value="#{messageBeanSNR.commonLabelCargueUnArchivoDosPuntos}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:fileUpload
+								fileUploadListener="#{beanEtapaDinamica.processFile}"
+								mode="advanced" dragDropSupport="true" cancelLabel="Cancelar"
+								uploadLabel="Cargar"
+								fileLimitMessage="Solo se puede cargar un archivo a la vez"
+								invalidFileMessage="El archivo de cargue debe ser de tipo Excel"
+								label="#{messageBeanSNR.commonLabelCargueUnArchivoDosPuntos}"
+								id="idFuLoadFile" widgetVar="idFuLoadFile" fileLimit="1"
+								allowTypes="/(\.|\/)(xlsx)$/"
+								oncomplete="PF('idFuLoadFile').clear();" />
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="ui-g-8 ui-md-8 ui-lg-8" />
+							<div class="ui-g-4 ui-md-4 ui-lg-4" style="float: right">
+								<div class="ui-g-2 ui-md-2 ui-lg-2">
+									<p:commandButton id="cbDescargar"
+										value="#{messageBeanSNR.commonLabelDescargar}" ajax="false"
+										rendered="#{beanEtapaDinamica.document != null}"
+										actionListener="#{beanEtapaDinamica.generateDownload}">
+										<p:fileDownload value="#{beanEtapaDinamica.download}" />
+									</p:commandButton>
+								</div>
+								<div class="ui-g-2 ui-md-2 ui-lg-2" style="float: right">
+									<p:commandButton id="cbProcesar" value="Procesar"
+										iconPos="left" style="float: right;" icon="fa fa-spinner"
+										rendered="#{beanEtapaDinamica.document == null}"
+										action="#{beanEtapaDinamica.process}" update="@form" />
+									<p:commandButton id="cbSalvar" value="Salvar" iconPos="left"
+										style="float: right;" icon="fa fa-save"
+										rendered="#{beanEtapaDinamica.document != null}"
+										action="#{beanEtapaDinamica.save}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

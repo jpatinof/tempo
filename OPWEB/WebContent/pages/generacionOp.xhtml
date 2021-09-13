@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelPlanTratamientoGeneracionOp}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelPlanTratamientoGeneracionOpDetalle}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelGeneracionOp}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fGeneracionOp" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+
+				<p:panel header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNumeroSolicitud"
+										value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otnumeroSolicitud" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.solicitud.numeroSolicitud}" />
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaTomografia"
+										value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otFechaTomografia" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.fechaTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaVencimientoTomografia"
+										value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otFechaVencimientoTomografia" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.fechaVencimientoTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<p:tabView value="#{beanPlanTratamientoGeneracionOp.tratamientos}"
+					var="tratamiento" id="idTabView">
+					<p:tab id="idTab"
+						title="#{tratamiento.encabezadoFormulario.nombreFormulario}">
+						<p:repeat value="#{tratamiento.secciones}" var="secciones">
+							<br />
+							<p:panel header="#{secciones.nombreSeccion}" id="idPanel"
+								style="text-align:center;">
+								<div class="ui-g">
+									<p:repeat value="#{secciones.campos}" var="campo">
+										<ui:fragment
+											rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpRadioButtom or campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpTextArea}">
+											<div class="ui-g-12 ui-md-12 ui-lg-12">
+												<div class="ui-g-12 ui-md-12 ui-lg-12">
+													<p:outputLabel value="#{campo.etiqueta}" />
+												</div>
+												<div class="ui-g-12 ui-md-12 ui-lg-12">
+													<p:selectOneRadio disabled="#{tratamiento.guardarCompleto}"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpRadioButtom}"
+														value="#{campo.dataString}">
+														<f:selectItems itemValue="#{item.codigo}" var="item"
+															value="#{campo.list}" itemLabel="#{item.etiqueta}" />
+													</p:selectOneRadio>
+												</div>
+												<div class="ui-g-12 ui-md-12 ui-lg-12">
+													<p:inputTextarea value="#{campo.dataString}"
+														readonly="#{tratamiento.guardarCompleto}"
+														title="#{campo.etiqueta}" maxlength="#{campo.tamEntero}"
+														onblur="value=value.toUpperCase()"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpTextArea}" />
+												</div>
+											</div>
+										</ui:fragment>
+										<ui:fragment
+											rendered="#{campo.tipoPresentacion ne beanPlanTratamientoGeneracionOp.tpRadioButtom and campo.tipoPresentacion ne beanPlanTratamientoGeneracionOp.tpTextArea}">
+											<div class="ui-g-3 ui-md-3 ui-lg-3">
+												<div class="ui-g-12 ui-md-12 ui-lg-12">
+													<p:outputLabel value="#{campo.etiqueta}" />
+												</div>
+												<div class="ui-g-12 ui-md-12 ui-lg-12">
+													<p:inputText value="#{campo.dataString}"
+														title="#{campo.etiqueta}" maxlength="#{campo.tamEntero}"
+														onblur="value=value.toUpperCase()"
+														readonly="#{tratamiento.guardarCompleto}"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpInputText}" />
+													<p:inputNumber value="#{campo.dataDouble}"
+														readonly="#{tratamiento.guardarCompleto}"
+														maxValue="#{campo.tamDecimal}" title="#{campo.etiqueta}"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpInputNumber}" />
+													<p:selectOneMenu value="#{campo.dataString}"
+														style="width:100%;" title="#{campo.etiqueta}"
+														disabled="#{tratamiento.guardarCompleto}"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpList1}">
+														<f:selectItem itemLabel="Seleccione" itemValue="" />
+														<f:selectItems itemValue="#{item.codigo}" var="item"
+															value="#{campo.list}" itemLabel="#{item.etiqueta}" />
+													</p:selectOneMenu>
+													<p:selectCheckboxMenu style="width:100%;" filter="true"
+														filterMatchMode="contains" label="#{campo.etiqueta}"
+														value="#{campo.dataStringCollection}"
+														title="#{campo.etiqueta}"
+														disabled="#{tratamiento.guardarCompleto}"
+														rendered="#{campo.tipoPresentacion eq beanPlanTratamientoGeneracionOp.tpList2}">
+														<f:selectItems itemValue="#{item.codigo}" var="item"
+															value="#{campo.list}" itemLabel="#{item.etiqueta}" />
+													</p:selectCheckboxMenu>
+												</div>
+											</div>
+										</ui:fragment>
+									</p:repeat>
+								</div>
+							</p:panel>
+						</p:repeat>
+					</p:tab>
+				</p:tabView>
+
+				<br />
+
+				<!-- Panel decision etapa -->
+				<p:panel toggleable="true"
+					rendered="#{beanPlanTratamientoGeneracionOp.guardarCompleto}"
+					header="#{messageBeanSNR.commonLabelTramitesRealizarAprobador}"
+					style="text-align:center">
+					<div class="ui-g" align="center">
+						<div align="center" class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:selectOneRadio layout="responsive" columns="2"
+								style="text-align: initial;width:100%;"
+								value="#{beanPlanTratamientoGeneracionOp.tramite}"
+								styleClass="ui-selectoneradiosinnegrilla">
+								<f:selectItem itemValue="A" itemLabel="Aprobado" />
+								<f:selectItem itemValue="D" itemLabel="Devolución" />
+								<p:ajax event="click"
+									update="idOPObservaciones, idOPCausalDevolucion, opBotones" />
+							</p:selectOneRadio>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<!-- Panel causal devolucion y observaciones -->
+				<p:outputPanel id="idOPObservaciones"
+					rendered="#{beanPlanTratamientoGeneracionOp.guardarCompleto}">
+					<p:outputPanel id="idOPCausalDevolucion"
+						rendered="#{beanPlanTratamientoGeneracionOp.tramite eq 'D'}">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6 ui-lg-4">
+								<p:outputLabel indicateRequired="true"
+									value="#{messageBeanSNR.commonLabelCausalDevolucionDosPuntos}" />
+								<p:selectOneMenu style="width:100%;" id="idSOMMotivosDevolucion"
+									value="#{beanPlanTratamientoGeneracionOp.causalDevolucion}">
+									<f:selectItem
+										itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+										itemValue="" />
+									<f:selectItems var="causal"
+										value="#{beanPlanTratamientoGeneracionOp.causalesDevolucion}"
+										itemLabel="#{causal.etiqueta}" itemValue="#{causal.codigo}">
+									</f:selectItems>
+								</p:selectOneMenu>
+							</div>
+						</div>
+					</p:outputPanel>
+
+					<div class="ui-g">
+						<br />
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="idOLObservaciones"
+								value="#{messageBeanSNR.commonLabelObservaciones}"
+								indicateRequired="#{beanPlanTratamientoGeneracionOp.tramite eq 'D'}" />
+							<p:inputTextarea id="idITAObservaciones" rows="3" cols="50"
+								onmouseover="contarCaracteres('fGeneracionOp:idITAObservaciones','fGeneracionOp:idOTNumCaracteres')"
+								onblur="value=value.toUpperCase()" maxlength="400"
+								onkeyup="contarCaracteres('fGeneracionOp:idITAObservaciones','fGeneracionOp:idOTNumCaracteres')"
+								value="#{beanPlanTratamientoGeneracionOp.observaciones}" />
+							<p:outputPanel>
+								<div align="right">
+									<h:outputText id="idOTNumCaracteres" align="right"
+										value="#{beanPlanTratamientoGeneracionOp.contar(beanPlanTratamientoGeneracionOp.observaciones)}" />
+									<h:outputText value=" #{messageBeanSNR.commonLabelCaracteres}" />
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanPlanTratamientoGeneracionOp.volverDetalle()}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton update="idGrowl" icon="fa fa-save"
+									rendered="#{!beanPlanTratamientoGeneracionOp.guardarCompleto}"
+									value="#{messageBeanSNR.commonButtonSalvarParcial}"
+									action="#{beanPlanTratamientoGeneracionOp.salvarParcial()}" />
+								&nbsp;
+								<p:commandButton update="idGrowl" icon="fa fa-save"
+									rendered="#{!beanPlanTratamientoGeneracionOp.guardarCompleto}"
+									value="#{messageBeanSNR.commonButtonSalvarTotal}"
+									onclick="PF('wConfirmarSalvar').show();" />
+								<ui:fragment
+									rendered="#{beanPlanTratamientoGeneracionOp.guardarCompleto}">
+									<p:commandButton id="idCbDescargarZip" value="Descargar"
+										actionListener="#{beanPlanTratamientoGeneracionOp.generarDocumentos()}"
+										ajax="false" icon="fa fa-arrow-down">
+										<p:fileDownload
+											value="#{beanPlanTratamientoGeneracionOp.imagen}" />
+									</p:commandButton>
+								&nbsp;
+								<p:commandButton icon="fa fa-save" iconPos="right"
+										rendered="#{beanPlanTratamientoGeneracionOp.tramite != null}"
+										value="#{beanPlanTratamientoGeneracionOp.tramite eq 'A' ? messageBeanSNR.commonButtonRevisado : messageBeanSNR.commonButtonDevolverEtapa}"
+										action="#{beanPlanTratamientoGeneracionOp.revisado()}"
+										update="idGrowl" />
+								</ui:fragment>
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+
+			<p:dialog appendTo="@(body)"
+				header="#{messageBeanSNR.commonLabelConfirmacion}"
+				widgetVar="wConfirmarSalvar" modal="true" height="90"
+				resizable="false">
+				<h:form id="fDialogConfirmar"
+					style="font-size: large; top: 50%; left: 50%;">
+					<h:outputText
+						value="#{messageBeanSNR.commonLabelEstaSeguroSalvarInformacion}" />
+					<br />
+					<br />
+					<div align="center">
+						<p:commandButton value="#{messageBeanSNR.commonSi}"
+							actionListener="#{beanPlanTratamientoGeneracionOp.salvarTotal()}"
+							onsuccess="PF('wConfirmarSalvar').hide();" icon="fa fa-check"
+							update="fGeneracionOp" />
+						<p:spacer />
+						<p:commandButton value="#{messageBeanSNR.commonNo}"
+							icon="fa fa-close" onsuccess="PF('wConfirmarSalvar').hide();" />
+					</div>
+				</h:form>
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

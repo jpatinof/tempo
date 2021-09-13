@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="RollingFileOE200" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="procfoe200.log" />
+		<param name="MaxFileSize" value="1024KB" />
+		<param name="MaxBackupIndex" value="10000" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}] %m\n" />
+		</layout>
+	</appender>
+	<appender name="RollingFileError" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="procfError.log" />
+		<param name="MaxFileSize" value="1024KB" />
+		<param name="MaxBackupIndex" value="1000" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}] [%p] %c - %m\n" />
+		</layout>
+	</appender>
+	<appender name="RollingFileInfo" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="procfInfo.log" />
+		<param name="MaxFileSize" value="10240KB" />
+		<param name="MaxBackupIndex" value="100" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}] [%p] %c - %m\n" />
+		</layout>
+	</appender>
+	<appender name="RollingFileStats" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="procfStats.log" />
+		<param name="MaxFileSize" value="10240KB" />
+		<param name="MaxBackupIndex" value="100" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}] %m%n" />
+		</layout>
+	</appender>
+	<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p - %m%n" />
+		</layout>
+	</appender>
+	<appender name="CoalescingStatistics" class="org.perf4j.log4j.AsyncCoalescingStatisticsAppender">
+		<param name="TimeSlice" value="86400000"/>
+		<appender-ref ref="fileAppender"/>
+	</appender>
+	<appender name="fileAppender" class="org.apache.log4j.FileAppender">
+		<param name="File" value="procfCoalescingStats.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n"/>
+		</layout>
+	</appender>
+	<category additivity="false" name="com.b2b">
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFileError" />
+	</category>
+	<category additivity="false" name="com.b2bsg">
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFileError" />
+	</category>
+	<category additivity="false" name="com.bachue">
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFileError" />
+	</category>
+	<category additivity="false" name="log4j.logger.org.apache.commons">
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+	</category>
+	<category additivity="false" name="org.apache.commons.digester">
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+	</category>
+	<category additivity="false" name="org.perf4j.TimingLogger">
+		<priority value="INFO" />
+		<appender-ref ref="CoalescingStatistics"/>
+		<appender-ref ref="RollingFileStats"/>
+	</category>
+	<root>
+		<priority value="ERROR" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFileError" />
+	</root>
+</log4j:configuration>

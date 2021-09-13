@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelRevisionTomografias}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fRevisionTomografias" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:outputPanel id="opRevisionTomografias">
+
+					<p:panel header="#{messageBeanSNR.commonLabelBandejaDeEntrada}"
+						style="min-width:800px; text-align: center !important;">
+
+						<p:dataTable id="dtBandeja"
+							value="#{beanRevisionTomografias.bandeja205}" var="item"
+							tableStyle="width:auto"
+							emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}">
+								<h:outputText value="#{item.numeroSolicitud}"
+									title="#{tooltipBeanSNR.procesosRevisionTomografiasNumeroDeLaSolicitud}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelFechaRecepcion}">
+								<h:outputText value="#{item.fechaCreacion}">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelFechaTomografia}">
+								<h:outputText value="#{item.fechaTomografia}">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{messageBeanSNR.commonLabelDoctor}"
+								width="10%">
+								<h:outputText value="#{item.doctor}" />
+							</p:column>
+							<p:column
+								headerText="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}"
+								width="10%" style="text-align: center !important;">
+								<h:outputText value="#{item.fechaVencimientoTomografia}">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{messageBeanSNR.commonLabelVisualizar}"
+								width="9%" style="text-align: center !important;">
+								<div align="center">
+									<h:commandButton
+										value="#{messageBeanSNR.commonLabelVerDetalle}"
+										action="#{beanRevisionTomografias.detalleBandeja(item)}"
+										immediate="true" image="../images/find.png"
+										title="#{tooltipBeanSNR.procesosRevisionTomografiasVisualizar}"
+										onclick="PrimeFaces.monitorDownload(start, stop);">
+										<script type="text/javascript">
+											function start() {
+												PF('statusDownload1').show();
+											}
+
+											function stop() {
+												PF('statusDownload1').hide();
+											}
+										</script>
+										<p:dialog modal="true" widgetVar="statusDownload1"
+											draggable="false" closable="false" resizable="false">
+											<p:graphicImage value="/images/ajaxloadingbar.gif" />
+										</p:dialog>
+									</h:commandButton>
+								</div>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

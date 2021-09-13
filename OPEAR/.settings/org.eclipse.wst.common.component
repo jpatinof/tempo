@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="CFEAR-1.0.0">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="CFBusiness-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPBusiness/OPBusiness">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json-20140107.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20140107/json-20140107.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="slf4j-api-1.7.25.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="slf4j-jdk14-1.7.25.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-jdk14/1.7.25/slf4j-jdk14-1.7.25.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-api-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-api/1.0.0/documents4j-api-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-local-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-local/1.0.0/documents4j-local-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-transformer-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-transformer/1.0.0/documents4j-transformer-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-util-conversion-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-util-conversion/1.0.0/documents4j-util-conversion-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="guava-18.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/18.0/guava-18.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="zt-exec-1.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/zeroturnaround/zt-exec/1.8/zt-exec-1.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-transformer-msoffice-word-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-transformer-msoffice-word/1.0.0/documents4j-transformer-msoffice-word-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-transformer-msoffice-base-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-transformer-msoffice-base/1.0.0/documents4j-transformer-msoffice-base-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-transformer-api-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-transformer-api/1.0.0/documents4j-transformer-api-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-util-all-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-util-all/1.0.0/documents4j-util-all-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="documents4j-util-transformer-process-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/documents4j/documents4j-util-transformer-process/1.0.0/documents4j-util-transformer-process-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-io-2.8.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.8.0/commons-io-2.8.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFCommon-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPCommon/OPCommon">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="poi-ooxml-3.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi-ooxml/3.7/poi-ooxml-3.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="poi-3.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="poi-ooxml-schemas-3.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi-ooxml-schemas/3.7/poi-ooxml-schemas-3.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="xmlbeans-2.3.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stax-api-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/stax/stax-api/1.0.1/stax-api-1.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="geronimo-stax-api_1.0_spec-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0/geronimo-stax-api_1.0_spec-1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="dom4j-1.6.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="xml-apis-1.0.b2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="axis-1.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/axis/axis/1.4/axis-1.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jsch-0.1.54.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/jcraft/jsch/0.1.54/jsch-0.1.54.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFConfig-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPConfig/OPConfig">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFDao-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPDao/OPDao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ojdbc10-19.8.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/oracle/database/jdbc/ojdbc10/19.8.0.0/ojdbc10-19.8.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFEJB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPEJB/OPEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFEJBClient-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPEJBClient/OPEJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFModel-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPModel/OPModel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CFWEB-1.0.0.jar" deploy-path="/lib" handle="module:/resource/OPWEB/OPWEB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="primefaces-extensions-10.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/extensions/primefaces-extensions/10.0.0/primefaces-extensions-10.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="log4j-1.2.14.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

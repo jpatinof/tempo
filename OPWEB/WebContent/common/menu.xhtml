@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<p:sidebar widgetVar="menuBar" baseZIndex="10000" showCloseIcon="false">
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-12"
+			style="margin-top: 1%; margin-left: -5%;">
+			<div class="ui-g-4 ui-md-4 ui-lg-4">
+				<img style="width: 100%;"
+					src="#{facesContext.externalContext.requestContextPath}/images/Logo.png" />
+			</div>
+			<div class="ui-g-8 ui-md-8 ui-lg-8">
+				<p:commandLink
+					style="margin-left:100%; filter: invert(33%) sepia(7%) saturate(3432%) hue-rotate(182deg) brightness(87%) contrast(84%);"
+					onclick="PF('menuBar').hide()">
+					<i class="fa fa-times-circle fa-lg" />
+				</p:commandLink>
+			</div>
+		</div>
+	</div>
+	<p:divider type="groove"
+		style="border-top-style: groove !important;border-color: rgb(255,255,255,0.2);" />
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-12"
+			style="margin-top: 1%; margin-left: -5%;">
+			<div class="ui-g-4 ui-md-4 ui-lg-4">
+				<p:avatar id="avatarUsr" styleClass="p-mr-2" size="xlarge"
+					style="margin-left: 20%;" shape="circle">
+					<p:outputPanel rendered="#{beanLogin.userProfileImage == null}">
+						<img src="/Tempo/images/user.png" />
+					</p:outputPanel>
+					<p:outputPanel rendered="#{beanLogin.userProfileImage != null}">
+						<p:graphicImage stream="false"
+							value="#{beanLogin.userProfileImage}" />
+					</p:outputPanel>
+				</p:avatar>
+			</div>
+			<div class="ui-g-8 ui-md-8 ui-lg-8"
+				style="margin-left: -8%; margin-top: 3%;">
+				<p:outputLabel style="font-weight: normal;"
+					value="#{beanLogin.userGender eq 'M'? 'Bienvenido,' : 'Bienvenida,'}" />
+				<p:spacer width="4" height="1" />
+				<p:outputLabel style="font-weight: bold;"
+					value=" #{beanLogin.userFirstName}" />
+				<p:outputLabel style="font-weight: normal;"
+					value="#{beanLogin.allocatorUser ? 'Asignador': ''}" />
+				<p:outputLabel style="font-weight: normal;"
+					value="#{beanLogin.allocatorUser and beanLogin.executingUser ? ',': ''}" />
+				<p:spacer width="4" height="1" />
+				<p:outputLabel style="font-weight: normal;"
+					value="#{beanLogin.executingUser ? 'Ejecutor': ''}" />
+			</div>
+		</div>
+	</div>
+	<p:divider type="groove"
+		style="border-top-style: groove !important;border-color: rgb(255,255,255,0.2);" />
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-12" style="height: 100%;">
+			<p:menu style="width:100%;border: 0px;" id="slideMenuTempo">
+				<p:submenu label="Administración" styleClass="subMenuTempo"
+					rendered="#{beanLogin.administratorUser}">
+					<p:menuitem value="Save (Non-Ajax)" action="#{menuView.save}"
+						ajax="false" icon="pi pi-save" />
+					<p:menuitem value="Update" action="#{menuView.update}"
+						icon="pi pi-refresh" />
+					<p:menuitem value="Delete" action="#{menuView.delete}"
+						icon="pi pi-times" />
+				</p:submenu>
+				<p:submenu styleClass="subMenuTempoDivider"
+					rendered="#{beanLogin.allocatorUser and beanLogin.administratorUser}" />
+				<p:submenu id="opcionesAsignador" label="Opciones asignación"
+					styleClass="subMenuTempo" rendered="#{beanLogin.allocatorUser}">
+					<p:menuitem value="Save (Non-Ajax)" action="#{menuView.save}"
+						ajax="false" icon="pi pi-save" />
+					<p:menuitem value="Update" action="#{menuView.update}"
+						icon="pi pi-refresh" />
+					<p:menuitem value="Delete" action="#{menuView.delete}"
+						icon="pi pi-times" />
+				</p:submenu>
+				<p:submenu styleClass="subMenuTempoDivider"
+					rendered="#{(beanLogin.executingUser and beanLogin.administratorUser) or (beanLogin.executingUser and beanLogin.allocatorUser)}" />
+				<p:submenu id="opcionesEjecutador" label="Opciones ejecución"
+					styleClass="subMenuTempo" rendered="#{beanLogin.executingUser}">
+					<p:menuitem value="Save (Non-Ajax)" action="#{menuView.save}"
+						ajax="false" icon="pi pi-save" />
+					<p:menuitem value="Update" action="#{menuView.update}"
+						icon="pi pi-refresh" />
+					<p:menuitem value="Delete" action="#{menuView.delete}"
+						icon="pi pi-times" />
+				</p:submenu>
+				<p:submenu styleClass="subMenuTempoDivider" />
+				<p:submenu label="Navegaciones" styleClass="subMenuTempo">
+					<p:menuitem value="Cerrar sesión" icon="fa fa-sign-out"
+						action="#{beanLogin.cerrarSesion}" />
+				</p:submenu>
+			</p:menu>
+		</div>
+	</div>
+</p:sidebar>
+</html>

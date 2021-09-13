@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelAdministracion}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelCargueGrafoUsuario}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fCargueGrafoUsuario" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:panel header="Cargue Grafo Usuario" closable="false"
+					style="text-align: center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olUser" value="Usuario: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itUser" disabled="true"
+										value="#{beanCargueGrafo.user.idUsuario}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olDocumentType" value="Tipo de documento: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itDocumentType" disabled="true"
+										value="#{beanCargueGrafo.user.idDocumentoTipo}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olDocumentNumber"
+										value="Número de documento: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itDocumentNumber" disabled="true"
+										value="#{beanCargueGrafo.user.numeroDocumento}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olActive" value="Activo: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itActive" disabled="true"
+										value="#{beanCargueGrafo.user.activo}" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFirstName" value="Primer nombre: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itFirstName" disabled="true"
+										value="#{beanCargueGrafo.user.primerNombre}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olMiddleName" value="Segundo nombre:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itMiddleName" disabled="true"
+										value="#{beanCargueGrafo.user.segundoNombre}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olLastName" value="Primer apellido: *" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itLastName" disabled="true"
+										value="#{beanCargueGrafo.user.primerApellido}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olSecondLastName" value="Segundo apellido:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itSecondLastName" disabled="true"
+										value="#{beanCargueGrafo.user.segundoApellido}" />
+								</div>
+							</div>
+
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olUF" value="Seleccione un archivo:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:fileUpload
+										fileUploadListener="#{beanCargueGrafo.processFile}"
+										mode="advanced" dragDropSupport="true" cancelLabel="Cancelar"
+										uploadLabel="Cargar" update="idGrowl"
+										fileLimitMessage="Solo se puede cargar un archivo a la vez"
+										invalidFileMessage="El archivo de cargue debe ser de tipo .png"
+										label="Seleccione un archivo:" id="idFuLoadFile"
+										widgetVar="idFuLoadFile" fileLimit="1"
+										allowTypes="/(\.|\/)(png|PNG)$/"
+										oncomplete="PF('idFuLoadFile').clear();" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+				<!-- Panel trazabilidad -->
+				<p:outputPanel id="opTrazabilidad">
+					<p:panel header="#{messageBeanSNR.commonLabelTrazabilidad}"
+						style="min-width:800px; text-align: center;">
+						<p:dataTable id="dtTrazabilidad"
+							value="#{beanCargueGrafo.userGraph}" var="item"
+							tableStyle="width:auto"
+							emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelUsuarioCreacion}">
+								<h:outputText value="#{item.idUsuarioCreacion}"
+									title="#{tooltipBeanSNR.administracionCargueGrafoUsuarioIdUsuarioCreacion}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelFechaCreacion}">
+								<h:outputText value="#{item.fechaCreacion}"
+									title="#{tooltipBeanSNR.administracionCargueGrafoUsuarioFechaCreacion}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelUsuarioModificacion}">
+								<h:outputText value="#{item.idUsuarioModificacion}"
+									title="#{tooltipBeanSNR.administracionCargueGrafoUsuarioUsuarioModificacion}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelFechaModificacion}">
+								<h:outputText value="#{item.fechaModificacion}"
+									title="#{tooltipBeanSNR.administracionCargueGrafoUsuarioFechaModificacion}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelIpModificación}">
+								<h:outputText value="#{item.ipModificacion}"
+									title="#{tooltipBeanSNR.administracionCargueGrafoUsuarioIpModificacion}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+
+				<!-- Panel botones -->
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanCargueGrafo.volverBandeja()}" />
+								<p:spacer />
+							</div>
+						</div>
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:commandButton id="cbSave"
+									value="#{messageBeanSNR.commonButtonInsertarImagen}"
+									iconPos="left" style="float: right;" icon="fa fa-pencil"
+									action="#{beanCargueGrafo.save()}" />
+							</div>
+						</div>
+
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

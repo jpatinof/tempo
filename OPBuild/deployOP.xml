@@ -1,0 +1,120 @@
+<project name="Build" default="all" basedir=".">
+	<property name="deploy.dir" location="C:\glassfish5\glassfish\domains\domain1" />
+	<property name="expose.dir" location="C:\ear" />
+	<property name="dist.dir" location="${basedir}/dist" />
+	<property name="lib.dir" location="${dist.dir}/lib" />
+	<property name="plugins.dir" location="C:\eclipse\plugins" />
+	<property name="workspace.dir" location="${basedir}/.." />
+	<tstamp>
+		<format property="dateTime.ear" pattern="yyyyMMdd_HHmm" />
+	</tstamp>
+	<property name="webinf.lib.dir" location="${workspace.dir}/OPWEB/WebContent/WEB-INF/lib" />
+	<target name="all" depends="borrarViejos,borrarDespliegues,exposeOP,clean" />
+	<target name="init">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<copy todir="${lib.dir}" verbose="true">
+			<fileset dir="${workspace.dir}/OPEAR/EarContent/lib/">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="borrarViejos">
+		<delete dir="${expose.dir}" verbose="true" />
+	</target>
+	<target name="exposeOP" depends="OPEAR">
+		<tstamp />
+		<copy file="${dist.dir}/TempoEAR.ear" tofile="${expose.dir}/TempoEAR.ear" verbose="true" />
+		<sleep seconds="2" />
+	</target>
+	<target name="borrarDespliegues">
+		<delete dir="${deploy.dir}\autodeploy\" verbose="true" />
+	</target>
+	<target name="checkWEBINFLib">
+		<available property="no.asjava.dir" file="${webinf.lib.dir}" type="dir" />
+	</target>
+	<target name="createWEBINFLib" depends="checkWEBINFLib" unless="no.asjava.dir">
+		<mkdir dir="${webinf.lib.dir}" />
+	</target>
+	<target name="clean">
+		<delete dir="${dist.dir}" verbose="true" />
+	</target>
+	<target name="OPBusiness" depends="init">
+		<jar basedir="${workspace.dir}/OPBusiness/target/classes" destfile="${lib.dir}/OPBusiness.jar" update="true" />
+	</target>
+	<target name="OPCommon" depends="init">
+		<jar basedir="${workspace.dir}/OPCommon/target/classes" destfile="${lib.dir}/OPCommon.jar" update="true" />
+	</target>
+	<target name="OPDelegate" depends="init">
+		<jar basedir="${workspace.dir}/OPDelegate/target/classes" destfile="${lib.dir}/OPDelegate.jar" update="true" />
+	</target>
+	<target name="OPScheduler" depends="init">
+		<jar basedir="${workspace.dir}/OsteoPhoenix/OPScheduler/target/classes" destfile="${lib.dir}/OPScheduler.jar" update="true" />
+	</target>
+	<target name="OPConfig" depends="init">
+		<jar basedir="${workspace.dir}/OPConfig/target/classes" destfile="${lib.dir}/OPConfig.jar" update="true">
+			<exclude name="**/*.dev" />
+			<exclude name="**/*.prd" />
+			<exclude name="**/PrimeFacesValidationMessages.properties" />
+		</jar>
+	</target>
+	<target name="OPDao" depends="init">
+		<jar basedir="${workspace.dir}/OPDao/target/classes" destfile="${lib.dir}/OPDao.jar" update="true" />
+	</target>
+	<target name="OPEAR" depends="init,OPConfig,OPCommon,OPModel,OPDao,OPBusiness,OPEJBClient,OPEJB,OPWEB">
+		<copy file="${workspace.dir}/OPEAR/EarContent/META-INF/glassfish-application.xml" tofile="${dist.dir}/META-INF/glassfish-application.xml" verbose="true" />
+		<ear appxml="${workspace.dir}/OPEAR/EarContent/META-INF/applicationWorkflowWeb.xml" destfile="${dist.dir}/TempoEAR.ear" update="true">
+			<fileset dir="${dist.dir}">
+				<include name="OPEJB.jar" />
+				<include name="OPWEB.war" />
+				<include name="lib/*.jar" />
+				<include name="META-INF/glassfish-application.xml" />
+			</fileset>
+		</ear>
+	</target>
+	<target name="OPEJB" depends="init">
+		<jar destfile="${dist.dir}/OPEJB.jar" update="true">
+			<fileset dir="${workspace.dir}/OPEJB/target/classes">
+				<exclude name="META-INF/ejb-jar.xml" />
+				<exclude name="META-INF/sun-ejb-jar.xml" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/core/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/consultaGD/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/parameter/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/reference/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/Logger.class" />
+			</fileset>
+		</jar>
+	</target>
+	<target name="OPEJBClient" depends="init">
+		<jar destfile="${lib.dir}/OPEJBClient.jar" update="true">
+			<fileset dir="${workspace.dir}/OPEJBClient/target/classes">
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/core/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/consultaGD/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/parameter/" />
+				<include name="com/cromasoft/osteophoenix/ejb/session/stateless/reference/" />
+			</fileset>
+		</jar>
+	</target>
+	<target name="OPModel" depends="init">
+		<jar basedir="${workspace.dir}/OPModel/target/classes" destfile="${lib.dir}/OPModel.jar" update="true" />
+	</target>
+	<target name="OPWEB" depends="init,createWEBINFLib">
+		<war destfile="${dist.dir}/OPWEB.war" webxml="${workspace.dir}/OPWEB/WebContent/WEB-INF/web.xml">
+			<classes dir="${workspace.dir}/OPWEB/target/classes" />
+			<fileset dir="${workspace.dir}/OPWEB/WebContent/">
+				<include name="**/*.html" />
+				<include name="**/*.xhtml" />
+				<include name="**/*.css" />
+				<include name="**/*.png" />
+				<include name="**/*.gif" />
+				<include name="**/*.js" />
+				<include name="**/*.ttf" />
+				<include name="**/*.woff" />
+				<include name="**/*.woff2" />
+				<include name="WEB-INF/faces-config-application.xml" />
+				<include name="WEB-INF/glassfish-web.xml" />
+			</fileset>
+			<lib dir="${workspace.dir}/OPWEB/WebContent/WEB-INF/lib" />
+		</war>
+	</target>
+</project>

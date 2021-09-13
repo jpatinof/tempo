@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelParametros}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelConstantes}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fConstantes" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+
+				<p:outputPanel id="opConstantes">
+					<p:panel>
+						<div class="ui-g">
+							<p:commandButton id="cbInsertar"
+								value="#{messageBeanSNR.commonButtonInsertarConstantes}"
+								iconPos="right" style="float: left;" icon="fa fa-plus-circle"
+								action="#{beanConstantes.bandejaInsertar}" />
+						</div>
+					</p:panel>
+
+					<p:panel header="#{messageBeanSNR.commonLabelConstantes}"
+						style="min-width:800px; text-align: center;">
+
+						<p:dataTable id="dtBandeja" value="#{beanConstantes.bandeja}"
+							var="item" tableStyle="width:auto"
+							emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+							<p:column style="width: auto;"
+								headerText="#{messageBeanSNR.commonLabelConstante}"
+								title="#{tooltipBeanSNR.administracionConstantesNombre}"
+								filterBy="#{item.nombre}">
+								<p:commandLink id="clNombre"
+									action="#{beanConstantes.detalleBandeja(item)}">
+									<div style="text-align: left !important;">
+										<h:outputText id="olProductName" value="#{item.nombre}"
+											style="text-align:left !important; font-weight: normal; text-decoration: underline;" />
+									</div>
+								</p:commandLink>
+							</p:column>
+							<p:column style="width: 20%;"
+								headerText="#{messageBeanSNR.commonLabelCaracter}"
+								title="#{tooltipBeanSNR.administracionConstantesCaracter}">
+								<h:outputLabel id="olCharacter" value="#{item.caracter}"
+									style="text-align:center !important;font-weight: normal;" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelDescripcion}"
+								title="#{tooltipBeanSNR.administracionConstantesDescripcion}">
+
+								<h:outputLabel id="olDescription" value="#{item.descripcion}"
+									style="text-align:center !important;font-weight: normal;" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelImagen}">
+								<h:commandButton value="#{messageBeanSNR.commonLabelDescargar}"
+									style="width:34px; height:34px;"
+									actionListener="#{beanConstantes.descargarConstante()}"
+									ajax="false" rendered="#{item.tipoArchivo != null}"
+									image="#{beanConstantes.getImageTypeToShow(item.tipoArchivo)}">
+									<p:fileDownload value="#{beanConstantes.imagen}" />
+									<f:param name="idConstante" value="#{item.nombre}" />
+								</h:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelOrdenAceptacionDiseno}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelOrdenAceptacionDisenoDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fOrdenAceptacionDisenoDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:panel header="#{messageBeanSNR.commonLabelOrdenAceptacionDiseno}"
+					closable="false" style="text-align: center;">
+
+					<!-- Panel datos basicos -->
+					<p:panel
+						header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olNumeroSolicitud"
+											value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otnumeroSolicitud" readonly="true"
+											value="#{beanOrdenAceptacionDiseno.solicitud.numeroSolicitud}" />
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaTomografia"
+											value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaTomografia" readonly="true"
+											value="#{beanOrdenAceptacionDiseno.itemSeleccionado.fechaTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaVencimientoTomografia"
+											value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaVencimientoTomografia" readonly="true"
+											value="#{beanOrdenAceptacionDiseno.itemSeleccionado.fechaVencimientoTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel zona a tratar -->
+					<p:panel header="#{messageBeanSNR.commonLabelZonaTratar}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otzonaTratar" readonly="true"
+											value="#{beanOrdenAceptacionDiseno.solicitud.zonaTratar}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel Observaciones etapa anterior -->
+					<p:panel
+						header="#{messageBeanSNR.commonLabelObservacionesEtapaAnterior}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important; width: 100%;">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otObservacionesEtapaAnterior" readonly="true"
+										style="width: 100%; min-height: 80px"
+										value="#{beanOrdenAceptacionDiseno.itemSeleccionado.observaciones}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<p:panel header="#{messageBeanSNR.commonLabelOrdenAceptacionRealizar}"
+						style="min-width:800px; text-align: center !important;">
+						<p:dataTable id="dtBandeja"
+							value="#{beanOrdenAceptacionDiseno.relacionFormulario}"
+							var="item" tableStyle="width:auto"
+							emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelPlanTratamiento}">
+								<h:outputText value="#{item.nombrePadre}"
+									title="#{tooltipBeanSNR.procesosOrdenAceptacionDisenoDetallePlanTratamiento}" />
+							</p:column>
+							<p:column style="width: 10%;"
+								headerText="#{messageBeanSNR.commonLabelOrdenAceptacionDiseno}">
+								<h:outputText value="#{item.nombreHijo}"
+									title="#{tooltipBeanSNR.procesosOrdenAceptacionDisenoDetalleOrdenAceptacionDiseno}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel botones -->
+					<p:outputPanel id="opBotones">
+						<div class="ui-g">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanOrdenAceptacionDiseno.volverBandeja}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonContinuar}"
+									icon="fa fa-arrow-circle-right" iconPos="right"
+									action="#{beanOrdenAceptacionDiseno.continuar}"
+									update="idGrowl" />
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

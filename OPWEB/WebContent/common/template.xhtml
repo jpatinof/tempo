@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge;IE=9" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="SNR" />
+	<meta name="author" content="bachue.com" />
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<title>Tempo</title>
+	<!-- Bootstrap core CSS -->
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+			<link
+				href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display;"
+				rel="stylesheet" />
+		</link>
+	</link>
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/css/style.css"
+		rel="stylesheet" />
+	<link rel="icon"
+		href="#{facesContext.externalContext.requestContextPath}/images/Logo.png"
+		type="image/png" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js"
+		target="head" />
+	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+		target="head" />
+	<!-- required modeler styles -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/css/diagram-js.css" />
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/css/bpmn-font/css/bpmn.css" />
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/js/jquery.i18n.properties-1.0.9.js"></script>
+	<style>
+html, body, #canvas {
+	height: 80vh;
+	padding: 0;
+	margin: 0;
+}
+
+.diagram-note {
+	background-color: rgba(66, 180, 21, 0.7);
+	color: White;
+	border-radius: 5px;
+	font-family: Arial;
+	font-size: 12px;
+	padding: 5px;
+	min-height: 16px;
+	width: 50px;
+	text-align: center;
+}
+
+.needs-discussion:not (.djs-connection ) .djs-visual>:nth-child(1) {
+	stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
+}
+
+#save-button {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+}
+</style>
+
+</h:head>
+<body>
+	<h:form id="templateForm">
+		<p:poll interval="#{beanLogin.timeOutMedio}"
+			listener="#{beanLogin.activarSesion}" />
+		<p:idleMonitor timeout="#{beanLogin.timeOut}"
+			multiWindowSupport="true">
+			<p:ajax event="idle" listener="#{beanLogin.cerrarSesionExpirada}" />
+		</p:idleMonitor>
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<p:menubar
+					style="background: transparent;border-color: transparent;border-bottom: 1px;height: 84px;top: -6px;left: -8px;width: 101%;">
+					<p:menuitem id="botonMenu" onclick="PF('menuBar').show()"
+						styleClass="botonMenu">
+						<div class="icono-menu">
+							<img
+								src="#{facesContext.externalContext.requestContextPath}/images/open-menu.png"
+								id="icono-menu" />
+						</div>
+					</p:menuitem>
+					<p:menuitem disabled="true"
+						style="background-image: none !important;background-color: transparent! important;">
+						<p:spacer width="1" height="25"
+							style="position: relative; bottom: -18px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+					</p:menuitem>
+					<p:menuitem disabled="true"
+						style="background-image: none !important;background-color: transparent! important;">
+						<p:spacer width="507" height="1" />
+					</p:menuitem>
+					<p:menuitem id="logoSky" styleClass="logoSky">
+						<h:link href="principal.jsf">
+							<img style="width: 26%;"
+								src="#{facesContext.externalContext.requestContextPath}/images/LogoSkySoft.png" />
+						</h:link>
+					</p:menuitem>
+					<f:facet name="options">
+						<p:commandLink styleClass="ui-button-raised"
+							action="#{beanLogin.cerrarSesion}">
+							<i class="fa fa-sign-out fa-2x"></i>
+						</p:commandLink>
+					</f:facet>
+				</p:menubar>
+			</div>
+		</div>
+		<ui:include src="../common/menu.xhtml" />
+	</h:form>
+	<ui:insert name="content" />
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="#{facesContext.externalContext.requestContextPath}/js/calendar.js"></script>
+	<script
+		src="#{facesContext.externalContext.requestContextPath}/js/popper.min.js"></script>
+	<script
+		src="#{facesContext.externalContext.requestContextPath}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/scripts.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/js/loader.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/js/visualizador.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/js/bpmnCustomEdition.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/js/overlib.js"></script>
+</body>
+</html>

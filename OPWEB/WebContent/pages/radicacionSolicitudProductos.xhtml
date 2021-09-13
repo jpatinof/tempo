@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelSolicitudProductos}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{beanRadicacionSolicitudProductos.idSubProceso eq '2' ? messageBeanSNR.commonLabelProductosEnSerie :messageBeanSNR.commonLabelProductosAMedida}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fRadicacionSolicitud" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:outputPanel id="opRadicacionSolicitudProductos">
+					<ui:param name="bean" value="#{beanRadicacionSolicitudProductos}" />
+					<ui:include src="radicacionSolicitud.xhtml" />
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:commandButton id="cbSalvar" value="Salvar" iconPos="left"
+								style="float: right;" icon="fa fa-save"
+								update="fRadicacionSolicitud:idGrowl,idDialogNir,fDialog2,opRadicacionSolicitudProductos"
+								action="#{beanRadicacionSolicitudProductos.salvar}" />
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+			<p:dialog appendTo="@(body)" id="idDialogNir" closable="false"
+				header="#{messageBeanSNR.commonLabelNumeroSolicitudCreado}"
+				widgetVar="idDialogNir" modal="true" height="100" resizable="false">
+				<h:form id="fDialog2"
+					style="font-size: large; top: 100%; left: 100%;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<h:outputText id="otMensaje"
+								value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}: #{beanRadicacionSolicitudProductos.requestNumber}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:commandButton id="cbReturn" value="Salir" iconPos="left"
+								style="float: right;" icon="fa fa-sign-out"
+								action="#{beanRadicacionSolicitudProductos.exit}" />
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelParametros}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelPlantillas}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{(beanPlantillas.insercion)? messageBeanSNR.commonLabelInsertarPlantilla : messageBeanSNR.commonLabelModificarPlantilla}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fplantillasDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:panel
+					header="#{(beanPlantillas.insercion)? messageBeanSNR.commonLabelInsertarPlantilla : messageBeanSNR.commonLabelModificarPlantilla }"
+					style="text-align: center !important;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olAsunto"
+										value="#{messageBeanSNR.commonLabelAsunto} #{messageBeanSNR.commonLabelAsterisco}" />
+									<p:inputText id="itAsunto"
+										value="#{beanPlantillas.plantilla.asunto}"
+										title="#{tooltipBeanSNR.administracionPlantillasAsunto}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olCuerpo"
+										value="#{messageBeanSNR.commonLabelCuerpo} #{messageBeanSNR.commonLabelAsterisco}" />
+									<p:inputText id="itCuerpo"
+										value="#{beanPlantillas.plantilla.cuerpo}"
+										title="#{tooltipBeanSNR.administracionPlantillasCuerpo}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olComentario"
+										value="#{messageBeanSNR.commonLabelComentario} " />
+									<p:inputText id="itComentario"
+										value="#{beanPlantillas.plantilla.comentario}"
+										title="#{tooltipBeanSNR.administracionPlantillasComentario}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olActivo"
+										value="#{messageBeanSNR.commonLabelActivo} #{messageBeanSNR.commonLabelAsterisco}" />
+									<p:selectOneMenu id="somActivo"
+										value="#{beanPlantillas.plantilla.activo}"
+										style="width: 100% !important">
+										<f:selectItem
+											itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+											itemValue="#{null}" />
+										<f:selectItem itemLabel="#{messageBeanSNR.commonLabelSi}"
+											itemValue="#{messageBeanSNR.commonLabelS}" />
+										<f:selectItem itemLabel="#{messageBeanSNR.commonLabelNo}"
+											itemValue="#{messageBeanSNR.commonLabelN}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olCorreoDestinatariosMensaje"
+										value="#{messageBeanSNR.commonLabelCorreoDestinatariosMensaje}" />
+									<p:inputText id="itTexto"
+										value="#{beanPlantillas.plantilla.correoDestinatariosMensaje}"
+										title="#{tooltipBeanSNR.administracionPlantillasCorreoDestinatariosMensaje}" />
+								</div>
+							</div>
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olUF" value="Seleccione un archivo:" />
+									<p:fileUpload
+										fileUploadListener="#{beanPlantillas.processFile}"
+										mode="advanced" dragDropSupport="true" cancelLabel="Cancelar"
+										uploadLabel="Cargar" update="idGrowl"
+										fileLimitMessage="Solo se puede cargar un archivo a la vez"
+										invalidFileMessage="El archivo de cargue debe ser de tipo .rtf"
+										label="Seleccione un archivo:" id="idFuLoadFile"
+										widgetVar="idFuLoadFile" fileLimit="1"
+										allowTypes="/(\.|\/)(rtf|RTF)$/"
+										oncomplete="PF('idFuLoadFile').clear();" />
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</p:panel>
+
+				<!-- Panel trazabilidad -->
+				<ui:fragment rendered="#{!beanPlantillas.insercion}" style="width: 100%;">
+					<p:outputPanel id="opTrazabilidad">
+						<p:panel header="#{messageBeanSNR.commonLabelTrazabilidad}"
+							style="min-width:800px; text-align: center;">
+							<p:dataTable id="dtTrazabilidad"
+								value="#{beanPlantillas.plantilla}" var="item"
+								tableStyle="width:auto"
+								emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+								<p:column style="width: 10%;"
+									headerText="#{messageBeanSNR.commonLabelUsuarioCreacion}">
+									<h:outputText value="#{item.idUsuarioCreacion}"
+										title="#{tooltipBeanSNR.administracionPlantillasIdUsuarioCreacion}" />
+								</p:column>
+								<p:column style="width: 10%;"
+									headerText="#{messageBeanSNR.commonLabelFechaCreacion}">
+									<h:outputText value="#{item.fechaCreacion}"
+										title="#{tooltipBeanSNR.administracionPlantillasFechaCreacion}" />
+								</p:column>
+								<p:column style="width: 10%;"
+									headerText="#{messageBeanSNR.commonLabelUsuarioModificacion}">
+									<h:outputText value="#{item.idUsuarioModificacion}"
+										title="#{tooltipBeanSNR.administracionPlantillasUsuarioModificacion}" />
+								</p:column>
+								<p:column style="width: 10%;"
+									headerText="#{messageBeanSNR.commonLabelFechaModificacion}">
+									<h:outputText value="#{item.fechaModificacion}"
+										title="#{tooltipBeanSNR.administracionPlantillasFechaModificacion}" />
+								</p:column>
+								<p:column style="width: 10%;"
+									headerText="#{messageBeanSNR.commonLabelIpModificación}">
+									<h:outputText value="#{item.ipModificacion}"
+										title="#{tooltipBeanSNR.administracionPlantillasIpModificacion}" />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</p:outputPanel>
+				</ui:fragment>
+
+				<!-- Panel botones -->
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanPlantillas.volverBandeja()}" />
+								<p:spacer />
+							</div>
+						</div>
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:commandButton id="cbSalvar" value="Salvar" iconPos="right"
+									style="float: right;" icon="fa fa-save"
+									action="#{beanPlantillas.salvar()}" />
+							</div>
+						</div>
+
+					</div>
+				</p:outputPanel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

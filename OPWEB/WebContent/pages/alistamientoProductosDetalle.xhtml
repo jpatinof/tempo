@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelAlistamientoProductos}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelAlistamientoProductosDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fAlistamientoProductosDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:panel header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNumeroSolicitud"
+										value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otnumeroSolicitud" readonly="true"
+										value="#{beanAlistamientoProductos.solicitud.numeroSolicitud}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaRecepcion"
+										value="#{messageBeanSNR.commonLabelFechaRecepcion}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itFechaRecepcion" readonly="true"
+										value="#{beanAlistamientoProductos.itemSeleccionado.fechaCreacion}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olOrdenPedido"
+										value="#{messageBeanSNR.commonLabelOrdenPedido}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itOrdenPedido" readonly="true"
+										value="#{beanAlistamientoProductos.itemSeleccionado.ordenPedido}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNombreSolicitante"
+										value="#{messageBeanSNR.commonLabelNombreSolicitante}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itNombreSolicitante" readonly="true"
+										value="#{beanAlistamientoProductos.itemSeleccionado.idUsuarioCreacion}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<ui:fragment rendered="#{beanAlistamientoProductos.distribucion}">
+					<br />
+					<p:panel id="pDescripcionProductoDistribucion"
+						style="text-align: center;"
+						header="Descripción del producto solicitado distribución">
+						<p:outputPanel id="opDescripcionProductoDistribucion">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="dtDescripcionProductoDistribucion" var="var"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+										value="#{beanAlistamientoProductos.productoDistribucion}">
+										<p:column headerText="#{messageBeanSNR.commonLabelProducto}"
+											groupRow="true" style="text-align: center !important;">
+											<p:outputLabel value="#{var.nombreProducto}"
+												style="text-align: center !important;font-weight: normal;" />
+										</p:column>
+										<p:column headerText="#{messageBeanSNR.commonLabelReferencia}">
+											<p:outputLabel value="#{var.referencia}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column headerText="#{messageBeanSNR.commonLabelCantidad}">
+											<p:spinner readonly="true" id="itQuantity"
+												value="#{var.cantidad}" min="0" stepFactor="1" />
+										</p:column>
+										<p:column
+											headerText="#{messageBeanSNR.commonLabelComentarios}">
+											<p:outputLabel value="#{var.observaciones}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column
+											headerText="#{messageBeanSNR.commonLabelProductoCompleto}">
+											<p:selectBooleanCheckbox value="#{var.completo}">
+												<p:ajax
+													listener="#{beanAlistamientoProductos.completarDistribucion(var)}" />
+											</p:selectBooleanCheckbox>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:panel>
+				</ui:fragment>
+
+				<ui:fragment rendered="#{beanAlistamientoProductos.serie}">
+					<br />
+					<p:panel id="pDescripcionProductoSerie" style="text-align: center;"
+						header="Descripción del producto solicitado en serie">
+						<p:outputPanel id="opDescripcionProductoSerie">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="dtDescripcionProductoSerie" var="var"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+										value="#{beanAlistamientoProductos.productosSerie}">
+										<p:column headerText="#{messageBeanSNR.commonLabelProducto}"
+											groupRow="true" style="text-align: center !important;">
+											<p:outputLabel value="#{var.nombreProducto}"
+												style="text-align: center !important;font-weight: normal;" />
+										</p:column>
+										<p:column headerText="#{messageBeanSNR.commonLabelCantidad}">
+											<p:spinner readonly="true" id="itQuantity"
+												value="#{var.cantidad}" min="0" stepFactor="1" />
+										</p:column>
+										<p:column headerText="CHECK-LIST (OSTEOPHOENIX) - REFERENCIA">
+											<p:outputLabel value="#{var.referencia}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column
+											headerText="#{messageBeanSNR.commonLabelProductoCompleto}">
+											<p:selectBooleanCheckbox value="#{var.completo}">
+												<p:ajax
+													listener="#{beanAlistamientoProductos.completarSerie(var)}" />
+											</p:selectBooleanCheckbox>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:panel>
+				</ui:fragment>
+
+				<br />
+				<p:panel id="pSeguimientoProceso" style="text-align: center;"
+					header="Seguimiento del proceso">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olAlbaran" value="Albaran" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otAlbaran" readonly="true"
+										value="#{beanAlistamientoProductos.albaran}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFactura" value="Factura" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otFactura" readonly="true"
+										value="#{beanAlistamientoProductos.factura}" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<br />
+					<ui:fragment rendered="#{beanAlistamientoProductos.serie}">
+						<p:outputPanel id="opSeguimientoProceso">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="dtSeguimientoProceso" var="var"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+										value="#{beanAlistamientoProductos.productosSerie}">
+										<p:column headerText="#{messageBeanSNR.commonLabelProducto}"
+											groupRow="true" style="text-align: center !important;">
+											<p:outputLabel value="#{var.nombreProducto}"
+												style="text-align: center !important;font-weight: normal;" />
+										</p:column>
+										<p:column headerText="Fecha salida">
+											<h:outputText value="#{var.fechaSalida}">
+												<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Lote materia prima">
+											<p:outputLabel value="#{var.loteMateriaPrima}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column headerText="Lote salida">
+											<p:outputLabel value="#{var.loteSalida}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column headerText="N° limpieza">
+											<p:outputLabel value="#{var.numeroLimpieza}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:outputPanel>
+					</ui:fragment>
+				</p:panel>
+
+				<br />
+
+				<p:panel id="pObservaciones" style="text-align: center;"
+					header="#{messageBeanSNR.commonLabelObservaciones}">
+					<p:outputPanel id="opObservaciones">
+						<p:inputTextarea id="idITAObservaciones" rows="3" cols="50"
+							onmouseover="contarCaracteres('fAlistamientoProductosDetalle:idITAObservaciones','fAlistamientoProductosDetalle:idOTNumCaracteres')"
+							onblur="value=value.toUpperCase()" maxlength="400"
+							onkeyup="contarCaracteres('fAlistamientoProductosDetalle:idITAObservaciones','fAlistamientoProductosDetalle:idOTNumCaracteres')"
+							value="#{beanAlistamientoProductos.observaciones}" />
+						<p:outputPanel>
+							<div align="right">
+								<h:outputText id="idOTNumCaracteres" align="right"
+									value="#{beanAlistamientoProductos.contar(beanAlistamientoProductos.observaciones)}" />
+								<h:outputText value=" #{messageBeanSNR.commonLabelCaracteres}" />
+							</div>
+						</p:outputPanel>
+					</p:outputPanel>
+				</p:panel>
+
+				<br />
+
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanAlistamientoProductos.volverBandeja()}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton update="idGrowl" value="Enviar a entrega"
+									icon="fa fa-save" iconPos="right"
+									action="#{beanAlistamientoProductos.continuar()}" />
+								<p:spacer />
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

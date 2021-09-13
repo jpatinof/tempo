@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<!-- Static navbar -->
+<nav class="navbar navbar-default">
+<div class="container-fluid" style="width: 100%;">
+	<button type="button" id="sidebarCollapse" class="navbar-btn"
+		onclick="$('#sidebar').toggleClass('active');$(this).toggleClass('active');">
+		<span></span> <span></span> <span></span>
+	</button>
+	<div class="d-none d-md-block" align="center">
+		<ui:insert name="migaPan"></ui:insert>
+	</div>
+	<!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav navbar-right">
+			<li><p:outputLabel id="idOlUsuario"
+					value="Bienvenido, #{sessionScope.nombreusuario != null ? sessionScope.nombreusuario : ''}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		</ul>
+	</div>-->
+</div>
+</nav>
+</html>

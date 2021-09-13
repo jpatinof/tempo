@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelConsultaGestor}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelConsulta}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fMonitoreo" style="width: 100%;">
+				<p:growl id="globalMsg" globalOnly="true" showDetail="true"
+					sticky="false" life="15000" redisplay="false" />
+				<center>
+					<p:outputPanel id="camposConsulta">
+						<p:panel header="Resultados" style="min-width:800px;"
+							id="pResultados">
+							<div class="ui-g" align="center">
+								<div class="ui-g-12 ui-md-12 ui-lg-12" align="center">
+									<p:dataTable id="dtSearchResults"
+										value="#{beanConsultaGD.searchResults}" var="doc"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}">
+										<p:column headerText="Nombre archivo"
+											style="text-align: center !important;">
+											<p:outputLabel value="#{doc.nombreArchivo}"
+												style="font-weight: normal;" />
+										</p:column>
+										<p:column headerText="Tipo documental"
+											style="text-align: center !important;">
+											<p:outputLabel value="#{doc.tipoDocumentalMv}"
+												style="font-weight: normal;" />
+										</p:column>
+										<p:column headerText="Tamaño"
+											style="text-align: center !important;">
+											<p:outputLabel value="#{doc.tamanoArchivo} KB"
+												style="font-weight: normal;" />
+										</p:column>
+										<p:column headerText="#{messageBeanSNR.commonLabelArchivo}"
+											style="text-align: center !important;">
+											<p:commandLink id="templateDownload" ajax="false"
+												actionListener="#{beanConsultaGD.getFileToDownload(doc)}">
+												<p:graphicImage
+													value="#{beanConsultaGD.getImageTypeToShow(doc.tipoArchivo)}"
+													width="48" />
+												<p:fileDownload value="#{beanConsultaGD.file}" />
+											</p:commandLink>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+							<div class="ui-g" align="center">
+								<div class="ui-g-12 ui-md-12 ui-lg-12" align="right">
+									<div class="ui-g-6 ui-md-6 ui-lg-6" align="left">
+										<p:commandButton
+											value="#{messageBeanSNR.commonButtonRegresar}"
+											icon="fa fa-arrow-circle-left" iconPos="left"
+											action="consultaGD?faces-redirect=true" />
+									</div>
+									<div class="ui-g-6 ui-md-6 ui-lg-6" align="right">
+										<p:commandButton value="#{messageBeanSNR.commonButtonSalir}"
+											icon="fa fa-sign-out" iconPos="rigth"
+											action="#{beanConsultaGD.exit()}" />
+									</div>
+								</div>
+							</div>
+						</p:panel>
+					</p:outputPanel>
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

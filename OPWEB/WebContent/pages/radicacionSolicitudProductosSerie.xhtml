@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelSolicitudProductos}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProductosEnSerie}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fRadicacionSolicitudSerie" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:panel id="opRadicacionSolicitudProductosSerie"
+							header="Datos del solicitante" style="text-align: center;">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<div class="ui-g-4 ui-md-4 ui-lg-4">
+											<p:outputLabel
+												value="#{messageBeanSNR.commonLabelNombreCompletoDosPuntos}" />
+										</div>
+										<div class="ui-g-8 ui-md-8 ui-lg-8">
+											<p:inputText id="itNombreCompleto" disabled="true"
+												value="#{beanRadicacionSolicitudProductosSerie.fullName}" />
+										</div>
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<div class="ui-g-4 ui-md-4 ui-lg-4">
+											<p:outputLabel
+												value="#{messageBeanSNR.commonLabelNumeroColegiadoDosPuntos}" />
+										</div>
+										<div class="ui-g-8 ui-md-8 ui-lg-8">
+											<p:inputText id="itNumeroColegiado"
+												value="#{beanRadicacionSolicitudProductosSerie.collegiateNumber}"
+												title="#{tooltipBeanSNR.procesosRadidacionSolicitudProductosSerieNumeroColegiado}">
+												<p:keyFilter mask="num" />
+											</p:inputText>
+										</div>
+									</div>
+								</div>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:panel id="pOtrasEspecificacionesQueSeQuieranAnotar"
+							header="Otras especificaciones que se quieran anotar"
+							style="text-align: center;">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12"
+									style="text-align: left !important;">
+									<div align="left">
+										<strong> <p:outputLabel
+												value="#{messageBeanSNR.commonLabelObservaciones}" />
+										</strong>
+										<p:inputTextarea rows="10" cols="240"
+											onblur="value=value.toUpperCase()"
+											title="#{tooltipBeanSNR.procesosRadidacionSolicitudProductosSerieObservaciones}"
+											value="#{beanRadicacionSolicitudProductosSerie.observations}"
+											queryDelay="750" maxlength="400" minQueryLength="4"
+											counterTemplate="{0} #{messageBeanSNR.commonLabelCaracteresRestantes}"
+											counter="idNumeroCaracteres1" />
+									</div>
+									<div align="right">
+										<h:outputText id="idNumeroCaracteres1" />
+									</div>
+								</div>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:panel id="pDescripcionDelProductoAFabricar"
+							header="Descripción del producto a fabricar"
+							style="text-align: center;">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:selectOneRadio id="sorOpciones" layout="responsive"
+										value="#{beanRadicacionSolicitudProductosSerie.productTypeSelected}"
+										columns="#{beanRadicacionSolicitudProductosSerie.isValidCollection(beanRadicacionSolicitudProductosSerie.productTypes) ? beanRadicacionSolicitudProductosSerie.productTypes.size() : 0}">
+										<f:selectItems
+											value="#{beanRadicacionSolicitudProductosSerie.productTypes}"
+											var="productType" itemLabel="#{productType.etiqueta}"
+											itemValue="#{productType.codigo}" />
+										<p:ajax update="idGrowl,pDescripcionDelProductoAFabricar"
+											listener="#{beanRadicacionSolicitudProductosSerie.activatePanelsFromProductSelected()}" />
+									</p:selectOneRadio>
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputPanel id="opPSE"
+										rendered="#{beanRadicacionSolicitudProductosSerie.renderPSE}">
+										<div class="ui-g-12 ui-md-12 ui-lg-12">
+											<p:panel id="pPSE" style="text-align: center;"
+												header="Descripción del producto a fabricar">
+												<div class="ui-g">
+													<div class="ui-g-12 ui-md-12 ui-lg-12"
+														style="text-align: left !important;">
+														<p:outputLabel value="Imagen explicativa:" />
+													</div>
+													<div class="ui-g-12 ui-md-12 ui-lg-12">
+														<ui:repeat
+															value="#{beanRadicacionSolicitudProductosSerie.serialProducts}"
+															var="product">
+															<div class="ui-g-3 ui-md-3 ui-lg-3">
+																<div class="ui-g-12 ui-md-12 ui-lg-12">
+																	<p:selectBooleanCheckbox value="#{product.selected}">
+																		<p:ajax
+																			update="fRadicacionSolicitudSerie:idGrowl,fRadicacionSolicitudSerie:dtSps,fRadicacionSolicitudSerie:dtFoil"
+																			listener="#{beanRadicacionSolicitudProductosSerie.selectSerialProduct(product)}" />
+																	</p:selectBooleanCheckbox>
+																	&nbsp;
+																	<p:outputLabel value="#{product.etiqueta}"
+																		style="font-weight: normal;" />
+																</div>
+																<div class="ui-g-12 ui-md-12 ui-lg-12">
+																	<h:graphicImage
+																		value="data:image/png;base64, #{product.image}" />
+																</div>
+															</div>
+														</ui:repeat>
+													</div>
+												</div>
+												<p:panel id="pDescripcionProductoSolicitado"
+													style="text-align: center;"
+													header="Descripción del producto solicitado">
+													<p:outputPanel id="opFoil">
+														<div class="ui-g">
+															<div class="ui-g-12 ui-md-12 ui-lg-12">
+																<p:dataTable id="dtFoil" var="sps"
+																	emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+																	value="#{beanRadicacionSolicitudProductosSerie.foils}">
+																	<p:column
+																		headerText="#{messageBeanSNR.commonLabelProducto}"
+																		groupRow="true" style="text-align: center !important;">
+																		<p:outputLabel value="Foil de titanio"
+																			style="text-align: center !important;font-weight: normal; text-decoration: underline;" />
+																	</p:column>
+
+																	<p:column headerText="Tamaño">
+																		<p:outputLabel value="#{sps.nombre}"
+																			style="font-weight: normal;text-align: center !" />
+																	</p:column>
+
+																	<p:column headerText="Cantidad">
+																		<p:spinner id="itQuantity" value="#{sps.cantidad}"
+																			min="0" stepFactor="1">
+																			<p:ajax event="change"
+																				update="itQuantity, fRadicacionSolicitudSerie:idGrowl"
+																				listener="#{beanRadicacionSolicitudProductosSerie.stockValidatePS(sps)}" />
+																		</p:spinner>
+																	</p:column>
+
+																	<p:column
+																		headerText="CHECK-LIST (OSTEOPHOENIX) - REFERENCIA">
+																		<p:outputLabel value="#{sps.referencia}"
+																			style="font-weight: normal;text-align:center !important;" />
+																	</p:column>
+																</p:dataTable>
+															</div>
+														</div>
+													</p:outputPanel>
+													<p:outputPanel id="opSerialProducts">
+														<div class="ui-g">
+															<div class="ui-g-12 ui-md-12 ui-lg-12">
+																<p:dataTable id="dtSps" var="sps" multiViewState="true"
+																	rowKey="#{sps.codigo}"
+																	selection="#{beanRadicacionSolicitudProductosSerie.serialProductSelected}"
+																	selectionMode="single"
+																	emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+																	value="#{beanRadicacionSolicitudProductosSerie.serialProductsSelected}">
+																	<p:ajax event="rowSelect"
+																		update="fDialogSerialProducts"
+																		oncomplete="PF('idDialogSerialProducts').show()" />
+																	<p:column
+																		headerText="#{messageBeanSNR.commonLabelProducto}">
+																		<p:outputLabel value="#{sps.etiqueta}"
+																			style="text-align:center !important;font-weight: normal; text-decoration: underline;" />
+																	</p:column>
+
+																	<p:column
+																		headerText="#{messageBeanSNR.commonLabelCantidadTotal}">
+																		<p:outputLabel id="itQuantity" value="#{sps.quantity}"
+																			style="text-align:center !important;font-weight: normal;" />
+																	</p:column>
+
+																	<p:column
+																		headerText="CHECK-LIST (OSTEOPHOENIX) - REFERENCIA">
+																		<p:outputLabel id="checkList" value="#{sps.checkList}"
+																			style="font-weight: normal;text-align:center !important;" />
+																	</p:column>
+																</p:dataTable>
+															</div>
+														</div>
+													</p:outputPanel>
+												</p:panel>
+											</p:panel>
+										</div>
+									</p:outputPanel>
+
+									<!-- Panel de productos distribucion -->
+									<p:outputPanel id="opPDI"
+										rendered="#{beanRadicacionSolicitudProductosSerie.renderPDI}">
+										<div class="ui-g-12 ui-md-12 ui-lg-12">
+											<p:panel id="pPDI" style="text-align: center;">
+												<p:dataTable id="dtProductosDistribucion" var="dp"
+													emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+													value="#{beanRadicacionSolicitudProductosSerie.distributionProducts}">
+													<p:column groupRow="true"
+														style="text-align: center !important;"
+														filterBy="#{dp.nombre}">
+														<f:facet name="header">
+															<p:outputLabel
+																value="#{messageBeanSNR.commonLabelProducto}"
+																style="text-align: center !important;" />
+														</f:facet>
+														<p:outputLabel value="#{dp.nombre}"
+															style="text-align: center !important;font-weight: normal;" />
+													</p:column>
+
+													<p:column filterBy="#{dp.referencia}">
+														<f:facet name="header">
+															<p:outputLabel value="Referencia"
+																style="text-align: center !important;" />
+														</f:facet>
+														<p:outputLabel value="#{dp.referencia}"
+															style="font-weight: normal;text-align: center !" />
+													</p:column>
+
+													<p:column>
+														<f:facet name="header">
+															<p:outputLabel
+																value="#{messageBeanSNR.commonLabelCantidad}"
+																style="text-align: center !important;" />
+														</f:facet>
+														<p:spinner id="itQuantity" value="#{dp.cantidad}" min="0"
+															stepFactor="1"
+															title="#{tooltipBeanSNR.procesosRadidacionSolicitudProductosSerieCantidad}">
+															<p:ajax event="change"
+																update="itQuantity, fRadicacionSolicitudSerie:idGrowl"
+																listener="#{beanRadicacionSolicitudProductosSerie.stockValidatePD(dp)}" />
+														</p:spinner>
+													</p:column>
+
+													<p:column>
+														<f:facet name="header">
+															<p:outputLabel value="Comentarios"
+																style="text-align: center !important;" />
+														</f:facet>
+														<p:inputTextarea rows="2" cols="60"
+															onblur="value=value.toUpperCase()"
+															value="#{dp.observaciones}" queryDelay="750"
+															maxlength="400" minQueryLength="4"
+															title="#{tooltipBeanSNR.procesosRadidacionSolicitudProductosSerieComentarios}" />
+													</p:column>
+												</p:dataTable>
+											</p:panel>
+										</div>
+									</p:outputPanel>
+								</div>
+							</div>
+						</p:panel>
+					</div>
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:commandButton id="cbSave"
+							value="#{messageBeanSNR.commonButtonGuardar}" iconPos="left"
+							update="fRadicacionSolicitudSerie:idGrowl"
+							action="#{beanRadicacionSolicitudProductosSerie.save}"
+							style="float: right;" icon="fa fa-save" />
+
+					</div>
+				</div>
+			</h:form>
+			<p:dialog appendTo="@(body)" id="idDialogNir" closable="false"
+				closeOnEscape="false"
+				header="#{beanRadicacionSolicitudProductosSerie.productTypeSelected eq 'PSD' ? 'Ordenes de pedido generadas' : 'Orden de pedido generada'}"
+				widgetVar="idDialogNir" modal="true" height="100" resizable="false">
+				<h:form id="fDialog2"
+					style="font-size: large; top: 100%; left: 100%;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<h:outputText id="otMensaje"
+								value="#{beanRadicacionSolicitudProductosSerie.productTypeSelected eq 'PSD' ? 'Las ordenes de pedido generadas son:' : 'La orden de pedido generada es:'} #{beanRadicacionSolicitudProductosSerie.message}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:commandButton id="cbReturn" value="Salir" iconPos="left"
+								style="float: right;" icon="fa fa-sign-out"
+								onclick="PF('idDialogSerialProducts').hide()"
+								action="#{beanRadicacionSolicitudProductosSerie.exit}" />
+
+							<p:commandButton
+								value="#{messageBeanSNR.commonButtonVisualizaDocumento}"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="fa fa-download" iconPos="left" style="float: right;">
+								<script type="text/javascript">
+									function start() {
+										PF('statusDownload1').show();
+									}
+
+									function stop() {
+										PF('statusDownload1').hide();
+									}
+								</script>
+								<p:fileDownload
+									value="#{beanRadicacionSolicitudProductosSerie.image}" />
+							</p:commandButton>
+
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
+			<p:dialog appendTo="@(body)" id="idDialogSerialProducts"
+				header="Selección de productos" position="center center"
+				onShow="PF('idDialogSerialProducts').initPosition()"
+				widgetVar="idDialogSerialProducts" modal="true" resizable="false"
+				maximizable="true">
+				<h:form id="fDialogSerialProducts"
+					style="font-size: large; top: 100%; left: 100%;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:dataTable id="dtSerial" var="sps" multiViewState="true"
+								emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+								value="#{beanRadicacionSolicitudProductosSerie.serialProductSelected.serialProducts}">
+								<p:column headerText="#{messageBeanSNR.commonLabelProducto}">
+									<p:outputLabel value="#{sps.nombre}"
+										style="font-weight: normal;" />
+								</p:column>
+
+								<p:column headerText="Cantidad">
+									<p:spinner id="itQuantity" value="#{sps.cantidad}" min="0"
+										stepFactor="1">
+										<p:ajax event="change"
+											update="itQuantity, fRadicacionSolicitudSerie:idGrowl"
+											listener="#{beanRadicacionSolicitudProductosSerie.stockValidatePS(sps)}" />
+									</p:spinner>
+								</p:column>
+
+								<p:column headerText="Referencia">
+									<p:outputLabel id="checkList" value="#{sps.referencia}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:commandButton id="cbSave"
+								value="#{messageBeanSNR.commonButtonGuardar}" iconPos="left"
+								update="fRadicacionSolicitudSerie:opSerialProducts,fRadicacionSolicitudSerie:idGrowl"
+								actionListener="#{beanRadicacionSolicitudProductosSerie.saveQuantitySerialProduct}"
+								style="float: right;" icon="fa fa-save" />
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

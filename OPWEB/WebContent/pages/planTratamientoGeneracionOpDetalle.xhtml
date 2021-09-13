@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelPlanTratamientoGeneracionOp}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelPlanTratamientoGeneracionOpDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fPlanTratamientoGeneracionOpDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<p:panel header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNumeroSolicitud"
+										value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otnumeroSolicitud" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.solicitud.numeroSolicitud}" />
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaTomografia"
+										value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otFechaTomografia" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.fechaTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaVencimientoTomografia"
+										value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otFechaVencimientoTomografia" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.fechaVencimientoTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:panel header="#{messageBeanSNR.commonLabelZonaTratar}"
+					style="text-align:center;"
+					rendered="#{!beanPlanTratamientoGeneracionOp.itemSeleccionado.viene205Motivo110}">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otzonaTratar" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.solicitud.zonaTratar}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<p:panel header="#{messageBeanSNR.commonLabelCausalDevolucion}"
+					style="text-align:center;"
+					rendered="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.viene205Motivo110}">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otcausalDevolucion" readonly="true"
+										value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.calificacion}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:panel
+					header="#{messageBeanSNR.commonLabelObservacionesEtapaAnterior}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<p:inputText id="otObservacionesEtapaAnterior" readonly="true"
+								value="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.observaciones}" />
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:panel header="#{messageBeanSNR.commonLabelPlanTratamientoDeseado}"
+					rendered="#{!beanPlanTratamientoGeneracionOp.itemSeleccionado.viene205Motivo110}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<p:repeat value="#{beanPlanTratamientoGeneracionOp.formularios}"
+								var="formulario">
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<p:selectBooleanCheckbox value="#{formulario.seleccionado}" />
+									&nbsp;&nbsp;
+									<p:outputLabel value="#{formulario.nombreFormulario}" />
+								</div>
+							</p:repeat>
+						</div>
+					</div>
+				</p:panel>
+
+				<!-- seccion de radicacion de solicitud cuando es devolucion motivo 110 desde una etapa 205 -->
+				<p:panel header="#{messageBeanSNR.commonLabelRadicacionSolicitud}"
+					closable="false" style="text-align: center;"
+					rendered="#{beanPlanTratamientoGeneracionOp.itemSeleccionado.viene205Motivo110}">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olDoctorTratante"
+										value="#{messageBeanSNR.commonLabelDoctorTratanteDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itDoctorTratante" disabled="true"
+										value="#{beanPlanTratamientoGeneracionOp.doctorTratante}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6" />
+						</div>
+						<p:panel id="pDatosDelPaciente"
+							header="#{messageBeanSNR.commonLabelDatosDelPaciente}">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olInicialPrimerNombre"
+											value="#{messageBeanSNR.commonLabelInicialPrimerNombreDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itInicialPrimerNombre" maxlength="1"
+											onblur="value=value.toUpperCase()"
+											value="#{beanPlanTratamientoGeneracionOp.inicialPrimerNombre}" />
+									</div>
+								</div>
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olInicialSegundoNombre"
+											value="#{messageBeanSNR.commonLabelInicialSegundoNombreDosPuntos}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itInicialSegundoNombre" maxlength="1"
+											onblur="value=value.toUpperCase()"
+											value="#{beanPlanTratamientoGeneracionOp.inicialSegundoNombre}" />
+									</div>
+								</div>
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olInicialPrimerApellido"
+											value="#{messageBeanSNR.commonLabelInicialPrimerApellidoDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itInicialPrimerApellido" maxlength="1"
+											onblur="value=value.toUpperCase()"
+											value="#{beanPlanTratamientoGeneracionOp.inicialPrimerApellido}" />
+									</div>
+								</div>
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olInicialSegundoApellido"
+											value="#{messageBeanSNR.commonLabelInicialSegundoApellidoDosPuntos}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itInicialSegundoApellido" maxlength="1"
+											onblur="value=value.toUpperCase()"
+											value="#{beanPlanTratamientoGeneracionOp.inicialSegundoApellido}" />
+									</div>
+								</div>
+							</div>
+						</p:panel>
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olZonaATratar"
+										value="#{messageBeanSNR.commonLabelInicialZonaATratarDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itZonaATratar"
+										onblur="value=value.toUpperCase()"
+										value="#{beanPlanTratamientoGeneracionOp.zonaATratar}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaTAC"
+										value="#{messageBeanSNR.commonLabelInicialFechaTACDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:calendar id="cFechaTAC" size="10" mask="true" locale="es"
+										placeholder="DD/MM/AAAA" pattern="dd/MM/yyyy" showOn="button"
+										value="#{beanPlanTratamientoGeneracionOp.fechaTAC}" />
+								</div>
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel
+										value="Si requiere incluir una pieza específica para el proceso, ingrese la información en el campo observaciones"
+										style="font-style: oblique;" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputPanel id="idObservaciones1">
+										<div align="left">
+											<strong> <p:outputLabel
+													value="#{messageBeanSNR.commonLabelObservaciones}" />
+											</strong>
+											<p:inputTextarea rows="10" cols="240"
+												onblur="value=value.toUpperCase()"
+												value="#{beanPlanTratamientoGeneracionOp.observaciones1}"
+												queryDelay="750" maxlength="400" minQueryLength="4"
+												counterTemplate="{0} #{messageBeanSNR.commonLabelCaracteresRestantes}"
+												counter="idNumeroCaracteres1" />
+										</div>
+										<div align="right">
+											<h:outputText id="idNumeroCaracteres1" />
+										</div>
+									</p:outputPanel>
+								</div>
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel
+										value="Archivo actualmente cargado es: #{beanPlanTratamientoGeneracionOp.nombreArchivo}"
+										style="font-weight: bold;" />
+								</div>
+
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:selectBooleanCheckbox
+										value="#{beanPlanTratamientoGeneracionOp.loadFile}"
+										itemLabel="Desea realizar un nuevo cargue de archivo ? ">
+										<p:ajax update="idCargueArchivo" />
+									</p:selectBooleanCheckbox>
+								</div>
+
+								<p:outputPanel id="idCargueArchivo"
+									rendered="#{beanPlanTratamientoGeneracionOp.loadFile}">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olUF"
+											value="#{messageBeanSNR.commonLabelSeleccioneArchivo}: #{messageBeanSNR.commonLabelAsterisco}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:fileUpload
+											fileUploadListener="#{beanPlanTratamientoGeneracionOp.processFile}"
+											mode="advanced" dragDropSupport="true" cancelLabel="Cancelar"
+											uploadLabel="Cargar"
+											fileLimitMessage="Solo se puede cargar un archivo a la vez"
+											invalidFileMessage="El archivo de cargue debe ser de tipo .zip, .rar"
+											label="#{messageBeanSNR.commonLabelSeleccioneArchivo}:"
+											id="idFuLoadFile" widgetVar="idFuLoadFile" fileLimit="1"
+											allowTypes="/(\.|\/)(zip|rar)$/"
+											oncomplete="PF('idFuLoadFile').clear();" />
+									</div>
+								</p:outputPanel>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanPlanTratamientoGeneracionOp.volverBandeja()}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton update="idGrowl"
+									value="#{messageBeanSNR.commonButtonContinuar}"
+									icon="fa fa-arrow-circle-right" iconPos="right"
+									onclick="PF('dlgConfirmarContinuarTratamientos').show();" />
+								<p:spacer />
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+
+			<p:dialog appendTo="@(body)"
+				header="#{messageBeanSNR.commonLabelConfirmacion}"
+				widgetVar="dlgConfirmarContinuarTratamientos" modal="true"
+				height="150" resizable="false">
+				<h:form id="dlgConfirmarContinuarTratamientos"
+					style="font-size: large; top: 50%; left: 50%;">
+					<h:outputText
+						value="#{messageBeanSNR.commonLabelEstaSeguroContinuarTratamientos1}" />
+					<br />
+					<br />
+					<h:outputText
+						value="#{messageBeanSNR.commonLabelEstaSeguroContinuarTratamientos2}" />
+					<br />
+					<br />
+					<div align="center">
+						<p:commandButton value="#{messageBeanSNR.commonSi}"
+							icon="fa fa-check" update="fPlanTratamientoGeneracionOpDetalle"
+							action="#{beanPlanTratamientoGeneracionOp.continuar()}"
+							oncomplete="PF('dlgConfirmarContinuarTratamientos').hide();" />
+						<p:spacer />
+						<p:commandButton value="#{messageBeanSNR.commonNo}"
+							icon="fa fa-close"
+							onclick="PF('dlgConfirmarContinuarTratamientos').hide();" />
+					</div>
+				</h:form>
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

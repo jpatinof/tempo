@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<p:panel id="panelDocumentacion"
+		header="#{messageBeanSNR.commonLabelSolicitudDocumentacion}"
+		style="text-align: center !important; width:100% ! important">
+		<div class="ui-g" style="text-align: center !important;">
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<p:dataTable id="dtBandeja" emptyMessage="" rowIndexVar="index"
+					value="#{bean.documentoSalida}" var="item" tableStyle="width:auto">
+					<p:column style="width: 10%;"
+						headerText="#{messageBeanSNR.commonLabelTipoDocumental}">
+						<p:selectOneMenu id="somTipoDocumental"
+							value="#{item.tipoDocumental}"
+							title="#{tooltipBeanSNR.procesosDispositivosAdicionalesTipoDocumental}"
+							style="width: 100% !important">
+							<f:selectItem itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+								itemValue="#{null}" />
+							<f:selectItems value="#{bean.tiposDocumentales}" var="var"
+								itemValue="#{var.codigo}" itemLabel="#{var.etiqueta}">
+							</f:selectItems>
+						</p:selectOneMenu>
+					</p:column>
+					<p:column style="width: 10%;"
+						headerText="#{messageBeanSNR.commonLabelRecepcion}">
+						<p:selectOneMenu id="somRecepcion" value="#{item.recepcion}"
+							title="#{tooltipBeanSNR.procesosDispositivosAdicionalesRecepcion}"
+							style="width: 100% !important">
+							<f:selectItem itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+								itemValue="#{null}" />
+							<f:selectItems value="#{bean.tiposRecepcion}" var="var"
+								itemValue="#{var.codigo}" itemLabel="#{var.etiqueta}">
+							</f:selectItems>
+						</p:selectOneMenu>
+					</p:column>
+					<p:column style="width: 10%;"
+						headerText="#{messageBeanSNR.commonLabelObservaciones}">
+						<p:inputText id="itObservaciones" value="#{item.observaciones}"
+							onblur="value=value.toUpperCase()"
+							title="#{tooltipBeanSNR.procesosDispositivosAdicionalesObservaciones}" />
+					</p:column>
+					<p:column style="width: 20%;"
+						headerText="#{messageBeanSNR.commonLabelArchivo}">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:fileUpload disabled="#{!item.cargar}"
+								fileUploadListener="#{bean.processFile}" mode="advanced"
+								dragDropSupport="true" cancelLabel="Cancelar"
+								uploadLabel="Cargar" update="@form:idGrowl"
+								fileLimitMessage="Solo se puede cargar un archivo a la vez"
+								label="#{messageBeanSNR.commonLabelCargueUnArchivoDosPuntos}"
+								fileLimit="1">
+								<f:attribute name="objDocSalida" value="#{item}" />
+							</p:fileUpload>
+						</div>
+					</p:column>
+					<p:column style="width: 5%;"
+						headerText="#{messageBeanSNR.commonLabelAccion}">
+						<p:commandButton icon="fa fa-trash" iconPos="center"
+							update="@form:panelDocumentacion,@form:idGrowl"
+							actionListener="#{bean.eliminarDocumentacion(item)}"
+							title="#{tooltipBeanSNR.procesosDispositivosAdicionalesEliminar}" />
+						<p:commandButton icon="fa fa-save" iconPos="center"
+							update="@form:panelDocumentacion,@form:idGrowl"
+							actionListener="#{bean.salvarDocumentacion(item)}"
+							rendered="#{bean.renderSaveDocuments}"
+							title="#{tooltipBeanSNR.procesosDispositivosAdicionalesSalvar}">
+							<f:attribute name="index" value="#{index}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<p:commandButton icon="fa fa-plus-circle" iconPos="right"
+					update="@form:panelDocumentacion"
+					actionListener="#{bean.agregarDocumentacion}"
+					value="#{messageBeanSNR.commonButtonAgregar}" />
+			</div>
+		</div>
+	</p:panel>
+</ui:composition>

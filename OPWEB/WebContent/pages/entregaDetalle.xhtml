@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelEntrega}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelEntregaDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fEntregaDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+				<!-- Panel datos basicos -->
+				<p:panel header="Datos básicos "
+					style="text-align: center !important;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNumeroSolicitud"
+										value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itNumeroSolicitud" disabled="true"
+										value="#{beanEntrega.solicitud.numeroSolicitud}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaRecepcion"
+										value="#{messageBeanSNR.commonLabelFechaRecepcion}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itFechaRecepcion" disabled="true"
+										value="#{beanEntrega.usuario.fechaCreacion}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olOrdenPedido"
+										value="#{messageBeanSNR.commonLabelOrdenPedido}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itOrdenPedido" disabled="true"
+										value="#{beanEntrega.usuario.ordenPedido}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNombreSolicitante"
+										value="#{messageBeanSNR.commonLabelNombreSolicitante}" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itNombreSolicitante" disabled="true"
+										value="#{beanEntrega.usuario.idUsuarioCreacion}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+				<br />
+
+
+
+				<!-- Descripcion de productos serie -->
+				<ui:fragment rendered="#{beanEntrega.flagSerie}">
+					<br />
+					<p:panel id="pDescripcionProductoSerie" style="text-align: center;"
+						header="Descripción del producto solicitado serie">
+						<p:outputPanel id="opDescripcionProductoSerie">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="dtDescripcionProductoSerie" var="var"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+										value="#{beanEntrega.serie}">
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelProducto}">
+											<h:outputText value="#{var.nombreProducto}"
+												title="#{tooltipBeanSNR.procesosEntregaProducto}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelCantidad}">
+											<h:outputText value="#{var.cantidad}"
+												title="#{tooltipBeanSNR.procesosEntregaCantidad}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelReferencia}">
+											<h:outputText value="#{var.referencia}"
+												title="#{tooltipBeanSNR.procesosEntregaReferencia}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:panel>
+				</ui:fragment>
+
+				<!-- Descripcion de productos distribucion -->
+				<ui:fragment rendered="#{beanEntrega.flagDistribucion}">
+					<br />
+					<p:panel id="pDescripcionProductoDistribucion"
+						style="text-align: center;"
+						header="Descripción del producto solicitado distribución">
+						<p:outputPanel id="opDescripcionProductoDistribucion">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:dataTable id="dtDescripcionProductoDistribucion" var="var"
+										emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+										value="#{beanEntrega.distribucion}">
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelProducto}">
+											<h:outputText value="#{var.nombreProducto}"
+												title="#{tooltipBeanSNR.procesosEntregaProducto}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelCantidad}">
+											<h:outputText value="#{var.cantidad}"
+												title="#{tooltipBeanSNR.procesosEntregaCantidad}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+										<p:column style="width: 10%;" headerText="#{messageBeanSNR.commonLabelReferencia}">
+											<h:outputText value="#{var.referencia}"
+												title="#{tooltipBeanSNR.procesosEntregaReferencia}"
+												style="font-weight: normal;text-align:center !important;" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:panel>
+				</ui:fragment>
+
+				<!-- Panel Descripcion de embalaje-->
+				<p:panel header="Embalaje" style="text-align: center !important;">
+					<div style="text-align: justify">
+						<h:outputText value="#{beanEntrega.embalaje}">
+						</h:outputText>
+					</div>
+
+				</p:panel>
+
+				<!-- Panel Descripcion de identificacion y trazabilidad-->
+				<p:panel header="Identificación y trazabilidad"
+					style="text-align: center !important;">
+					<div style="text-align: justify">
+						<h:outputText value="#{beanEntrega.identificacionTrazabilidad}">
+						</h:outputText>
+					</div>
+				</p:panel>
+
+				<!-- Panel Documentos de acompañamiento-->
+				<p:panel header="Documentos de acompañamiento"
+					style="text-align: center !important;">
+					<p:dataTable id="dtDocumentosAconpanamiento" var="var"
+						emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+						value="#{beanEntrega.multivalores}">
+						<p:column headerText="#{messageBeanSNR.commonLabelProducto}"
+							groupRow="true" style="text-align: center !important;">
+							<p:outputLabel value="#{var.etiqueta}"
+								style="text-align: center !important;font-weight: normal;" />
+						</p:column>
+						<p:column
+							headerText="#{messageBeanSNR.commonLabelValidacionDocumentos}"
+							style="text-align: center !important;">
+							<p:selectBooleanCheckbox value="#{var.completo}">
+								<p:ajax listener="#{beanEntrega.completarMultivalores(var)}" />
+
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<!-- Panel seguimiento del proceso-->
+				<p:panel header="Seguimiento del proceso"
+					style="text-align: center !important;">
+					<p:outputPanel id="opSeguimientoProceso">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="dtSeguimientoProceso"
+									emptyMessage="#{messageBeanSNR.commonLabelNoSeEncontraronRegistros}">
+									<p:column style="width: 10%;"
+										headerText="#{messageBeanSNR.commonLabelAlbaran}">
+										<h:outputText value="#{beanEntrega.stockMovimiento.albaran}"
+											title="#{tooltipBeanSNR.procesosEntregaAlbaran}"
+											style="font-weight: normal;text-align:center !important;" />
+									</p:column>
+									<p:column style="width: 10%;"
+										headerText="#{messageBeanSNR.commonLabelFactura}">
+										<h:outputText
+											value="#{beanEntrega.stockMovimiento.numeroFactura}"
+											title="#{tooltipBeanSNR.procesosEntregaFactura}"
+											style="font-weight: normal;text-align:center !important;" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:panel>
+				<br />
+				<!-- Panel botones -->
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left" update="idGrowl"
+									action="#{beanEntrega.volverBandeja()}" />
+								<p:spacer />
+							</div>
+						</div>
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:commandButton update="idGrowl" id="cbContinuar"
+									value="#{messageBeanSNR.commonButtonEnviar}" iconPos="right"
+									style="float: right;" icon="fa fa-send"
+									action="#{beanEntrega.continuar()}" />
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelDesign}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelDesignAMedida}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelDesignAMedidaDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fDesignDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+
+				<!-- Panel datos basicos de la solicitud-->
+				<p:panel header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+					style="text-align: center !important;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olNumeroSolicitud"
+										value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+									<p:inputText id="itNumeroSolicitud" disabled="true"
+										value="#{beanDesign.selectedItem.numeroSolicitud}"
+										title="#{tooltipBeanSNR.disenoDisenoAMedidaNumeroDeSolicitud}" />
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaTomografia"
+										value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+									<p:inputText id="itFechaTomografia" disabled="true"
+										value="#{beanDesign.selectedItem.fechaTomografia}"
+										title="#{tooltipBeanSNR.disenoDisenoAMedidaFechaTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olFechaVencimiemtoTomografia"
+										value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+									<p:inputText id="itFechaVencimientoTomografia" disabled="true"
+										value="#{beanDesign.selectedItem.fechaTomografia}"
+										title="#{tooltipBeanSNR.disenoDisenoAMedidaFechaTomografia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-3 ui-md-3 ui-lg-3" style="text-align: center;">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olVisualizarDocumentos"
+										value="#{messageBeanSNR.commonLabelVisualizarDocumentos}" />
+								</div>
+								<h:commandButton style="text-align:center; "
+									image="../images/find.png"
+									title="#{tooltipBeanSNR.disenoDisenoAMedidaVisualizarDocumentos}">
+									<p:dialog modal="true" widgetVar="statusDownload1"
+										draggable="false" closable="false" resizable="false">
+										<p:graphicImage value="/images/ajaxloadingbar.gif" />
+									</p:dialog>
+								</h:commandButton>
+
+							</div>
+
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:panel header="#{messageBeanSNR.commonLabelZonaTratar}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otzonaTratar" readonly="true"
+										title="#{tooltipBeanSNR.disenoDisenoAMedidaZonaATratar}"
+										value="#{beanDesign.solicitud.zonaTratar}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<p:panel
+					header="#{messageBeanSNR.commonLabelObservacionesEtapaAnterior}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<p:inputText id="otObservacionesEtapaAnterior" readonly="true"
+								title="#{tooltipBeanSNR.disenoDisenoAMedidaObservacionesEtapaAnterior}"
+								value="#{beanDesign.selectedItem.observaciones}" />
+						</div>
+					</div>
+				</p:panel>
+
+				<!-- Panel de datos generales -->
+				<p:panel id="p" style="text-align: center;"
+					header="#{messageBeanSNR.commonLabelDatosGenerales}">
+					<p:outputPanel id="opDatosGenerales">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:dataTable id="dtDatosGenerales" var="var"
+									emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+									value="#{beanDesign.treatmentPlans}">
+									<p:column style="width: 10%;"
+										headerText="#{messageBeanSNR.commonLabelNombrePaciente}">
+										<h:outputText value="#{var.key}"
+											title="#{tooltipBeanSNR.disenoDisenoAMedidaNombrePaciente}"
+											style="font-weight: normal;text-align:center !important;" />
+									</p:column>
+									<p:column style="width: 10%;"
+										headerText="#{messageBeanSNR.commonLabelDoctor}">
+										<h:outputText value="#{var.value}"
+											title="#{tooltipBeanSNR.disenoDisenoAMedidaDoctor}"
+											style="font-weight: normal;text-align:center !important;" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:panel>
+
+				<!-- Panel Diseño de dispositivos-->
+				<p:panel header="#{messageBeanSNR.commonLabelDisenoDispositivo}"
+					style="text-align: center !important;">
+					<p:dataTable id="dtDisenoDispositivo" var="var"
+						emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+						value="#{beanDesign.validacionesEtapaDiseno}">
+						<p:column headerText="#{messageBeanSNR.commonLabelDesign}"
+							groupRow="true" style="text-align: center !important;">
+							<p:outputLabel value="#{var.descripcion}"
+								style="text-align: center !important;font-weight: normal;" />
+						</p:column>
+						<p:column headerText="#{messageBeanSNR.commonLabelVerificacion}"
+							style="text-align: center !important;">
+							<p:selectBooleanCheckbox value="#{var.completo}">
+								<p:ajax update="fDesignDetalle:opBotones"
+									listener="#{beanDesign.completarValidacionEtapa(var)}" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<!-- Panel P3D-->
+				<p:panel header="#{messageBeanSNR.commonLabelP3D}"
+					style="text-align: center !important;">
+					<p:dataTable id="dtP3d" var="var"
+						emptyMessage="#{messageBeanSNR.commonMessageNoSeEncontraronRegistros}"
+						value="#{beanDesign.validacionesEtapaP3D}">
+						<p:column headerText="#{messageBeanSNR.commonLabelP3D}"
+							groupRow="true" style="text-align: center !important;">
+							<p:outputLabel value="#{var.descripcion}"
+								style="text-align: center !important;font-weight: normal;" />
+						</p:column>
+						<p:column headerText="#{messageBeanSNR.commonLabelVerificacion}"
+							style="text-align: center !important;">
+							<p:selectBooleanCheckbox value="#{var.completo}">
+								<p:ajax update="fDesignDetalle:opBotones"
+									listener="#{beanDesign.completarValidacionEtapa(var)}" />
+
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<!--Panel de responsable -->
+				<p:panel header="#{messageBeanSNR.commonLabelResponsable}"
+					style="text-align:center;">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-3 ui-md-3 ui-lg-3">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otResponsable" readonly="true"
+										title="#{tooltipBeanSNR.disenoDisenoAMedidaResponsable}"
+										value="#{beanDesign.selectedItem.idUsuarioCreacion}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<!-- Panel botones -->
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left" update="idGrowl"
+									action="#{beanDesign.volverBandeja()}" />
+								<p:spacer />
+							</div>
+						</div>
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:commandButton update="idGrowl" id="cbDownload"
+									rendered="#{beanDesign.enabledDownload}"
+									value="#{messageBeanSNR.commonButtonDescargar}" iconPos="right"
+									style="float: right;" icon="fa fa-send"
+									action="#{beanDesign.document}" />
+
+								<p:commandButton update="idGrowl" id="cbSalvar"
+									value="#{messageBeanSNR.commonButtonSalvar}" iconPos="right"
+									style="float: right;" icon="fa fa-save"
+									action="#{beanDesign.save()}" />
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

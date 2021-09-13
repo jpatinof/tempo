@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelMultivalores}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelMultivaloresDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fMultivaloresDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+
+				<!-- Panel datos basicos -->
+				<p:panel header="Datos básicos ">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olTabla"
+										value="Tabla:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otTabla" disabled="#{beanMultivalores.getInsercionString()}"
+										value="#{beanMultivalores.multivalores.tabla}" />
+								</div>
+							</div>
+
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olCodigo" value="Código:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otCodigo" disabled="#{beanMultivalores.getInsercionString()}"
+										value="#{beanMultivalores.multivalores.codigo}" />
+								</div>
+							</div>
+
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olActivo"
+										value="Activo:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otActivo"
+										value="#{beanMultivalores.multivalores.activo}" />
+								</div> 
+							</div>
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olDescripcion"
+										value="Descripción:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="itDescripcion"
+										value="#{beanMultivalores.multivalores.descripcion}" />
+								</div> 
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olEtiqueta" value="Etiqueta:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItEtiqueta" 
+										value="#{beanMultivalores.multivalores.etiqueta}" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</p:panel>
+
+				<br />
+				<!-- Panel Indicadores opcional-->
+				<p:panel header="Indicadores">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olIndicador1" value="Indicador 1:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItIndicador1" 
+										value="#{beanMultivalores.multivalores.indicador1}" />
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olIndicador2" value="Indicador 2:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItIndicador2" 
+										value="#{beanMultivalores.multivalores.indicador2}" />
+								</div>
+							</div>
+							<div class="ui-g-4 ui-md-4 ui-lg-4">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olIndicador3" value="Indicador 3:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItIndicador3" 
+										value="#{beanMultivalores.multivalores.indicador3}" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-12 ui-lg-12"
+							style="text-align: left !important;">
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olIndicador4" value="Indicador 4:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItIndicador4" 
+										value="#{beanMultivalores.multivalores.indicador4}" />
+								</div>
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:outputLabel id="olIndicador5" value="Indicador 5:" />
+								</div>
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="ItIndicador5" 
+										value="#{beanMultivalores.multivalores.indicador5}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<br />
+
+				<!-- Panel botones -->
+				<p:outputPanel id="opBotones">
+					<div class="ui-g">
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+									style="text-align: left !important;">
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanMultivalores.volverBandeja()}" />
+								<p:spacer />
+							</div>
+						</div>
+						<div class="ui-g-6 ui-md-6 ui-lg-6">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:commandButton id="cbSalvar" value="Salvar" iconPos="right"
+								style="float: right;" icon="fa fa-save"
+								action="#{beanMultivalores.salvar()}" />
+							</div>
+						</div>
+							
+					</div>
+				</p:outputPanel>
+			</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<p:panel header="Radicación solicitud" closable="false"
+		style="text-align: center;">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-12 ui-lg-12"
+				style="text-align: left !important;">
+				<div class="ui-g-6 ui-md-6 ui-lg-6">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel id="olDoctorTratante"
+							value="#{messageBeanSNR.commonLabelDoctorTratanteDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+					</div>
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:inputText id="itDoctorTratante" disabled="true"
+							value="#{bean.doctorTratante}" />
+					</div>
+				</div>
+				<div class="ui-g-6 ui-md-6 ui-lg-6" />
+			</div>
+			<p:panel id="pDatosDelPaciente"
+				header="#{messageBeanSNR.commonLabelDatosDelPaciente}">
+				<div class="ui-g-12 ui-md-12 ui-lg-12"
+					style="text-align: left !important;">
+					<div class="ui-g-3 ui-md-3 ui-lg-3">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olInicialPrimerNombre"
+								value="#{messageBeanSNR.commonLabelInicialPrimerNombreDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:inputText id="itInicialPrimerNombre" maxlength="1"
+								onblur="value=value.toUpperCase()"
+								value="#{bean.inicialPrimerNombre}"
+								title="#{tooltipBeanSNR.solicitudProductosAMedidaInicialPrimerNombre}" />
+						</div>
+					</div>
+					<div class="ui-g-3 ui-md-3 ui-lg-3">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olInicialSegundoNombre"
+								value="#{messageBeanSNR.commonLabelInicialSegundoNombreDosPuntos}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:inputText id="itInicialSegundoNombre" maxlength="1"
+								onblur="value=value.toUpperCase()"
+								value="#{bean.inicialSegundoNombre}"
+								title="#{tooltipBeanSNR.solicitudProductosAMedidaInicialSegundoNombre}" />
+						</div>
+					</div>
+					<div class="ui-g-3 ui-md-3 ui-lg-3">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olInicialPrimerApellido"
+								value="#{messageBeanSNR.commonLabelInicialPrimerApellidoDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:inputText id="itInicialPrimerApellido" maxlength="1"
+								onblur="value=value.toUpperCase()"
+								value="#{bean.inicialPrimerApellido}"
+								title="#{tooltipBeanSNR.solicitudProductosAMedidaInicialPrimerApellido}" />
+						</div>
+					</div>
+					<div class="ui-g-3 ui-md-3 ui-lg-3">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olInicialSegundoApellido"
+								value="#{messageBeanSNR.commonLabelInicialSegundoApellidoDosPuntos}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:inputText id="itInicialSegundoApellido" maxlength="1"
+								onblur="value=value.toUpperCase()"
+								value="#{bean.inicialSegundoApellido}"
+								title="#{tooltipBeanSNR.solicitudProductosAMedidaInicialSegundoApellido}" />
+						</div>
+					</div>
+				</div>
+			</p:panel>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"
+				style="text-align: left !important;">
+				<div class="ui-g-6 ui-md-6 ui-lg-6">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel id="olZonaATratar"
+							value="#{messageBeanSNR.commonLabelInicialZonaATratarDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+					</div>
+					<dir />
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:selectOneMenu id="somIdZonaATratar" value="#{bean.zonaATratar}"
+							style="width: 100% !important">
+							<f:selectItem itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+								itemValue="#{null}" />
+							<f:selectItems value="#{bean.zonasATratar}" var="zona"
+								itemValue="#{zona.codigo}" itemLabel="#{zona.codigo}" />
+						</p:selectOneMenu>
+					</div>
+				</div>
+				<div class="ui-g-6 ui-md-6 ui-lg-6">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel id="olFechaTAC"
+							value="#{messageBeanSNR.commonLabelInicialFechaTACDosPuntos} #{messageBeanSNR.commonLabelAsterisco}" />
+					</div>
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:calendar id="cFechaTAC" size="10" mask="true" locale="es"
+							placeholder="DD/MM/AAAA" pattern="dd/MM/yyyy" showOn="button"
+							value="#{bean.fechaTAC}"
+							title="#{tooltipBeanSNR.solicitudProductosAMedidaFechaTAC}" />
+					</div>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"
+				style="text-align: left !important;">
+				<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputLabel
+							value="Si requiere incluir una pieza específica para el proceso, ingrese la información en el campo observaciones"
+							style="font-weight: bold;" />
+					</div>
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<p:outputPanel id="idObservaciones1">
+							<div align="left">
+								<strong> <p:outputLabel
+										value="#{messageBeanSNR.commonLabelObservaciones}" />
+								</strong>
+								<p:inputTextarea rows="10" cols="240"
+									onblur="value=value.toUpperCase()"
+									value="#{bean.observaciones}" queryDelay="750" maxlength="400"
+									minQueryLength="4"
+									counterTemplate="{0} #{messageBeanSNR.commonLabelCaracteresRestantes}"
+									counter="idNumeroCaracteres1"
+									title="#{tooltipBeanSNR.solicitudProductosAMedidaObservaciones}" />
+							</div>
+							<div align="right">
+								<h:outputText id="idNumeroCaracteres1" />
+							</div>
+						</p:outputPanel>
+					</div>
+				</div>
+			</div>
+			<p:outputPanel rendered="#{bean.renderFileUpload}" style="width:100%">
+				<div class="ui-g-12 ui-md-12 ui-lg-12"
+					style="text-align: left !important;">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:outputLabel id="olUF"
+								value="#{messageBeanSNR.commonLabelSeleccioneArchivo}: #{messageBeanSNR.commonLabelAsterisco}" />
+						</div>
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<p:fileUpload fileUploadListener="#{bean.processFile}"
+								mode="advanced" dragDropSupport="true" cancelLabel="Cancelar"
+								uploadLabel="Cargar" update="idGrowl"
+								fileLimitMessage="Solo se puede cargar un archivo a la vez"
+								invalidFileMessage="El archivo de cargue debe ser de tipo .zip, .rar"
+								label="#{messageBeanSNR.commonLabelSeleccioneArchivo}:"
+								id="idFuLoadFile" widgetVar="idFuLoadFile" fileLimit="1"
+								allowTypes="/(\.|\/)(zip|rar)$/"
+								oncomplete="PF('idFuLoadFile').clear();" />
+						</div>
+					</div>
+				</div>
+			</p:outputPanel>
+		</div>
+	</p:panel>
+</ui:composition>

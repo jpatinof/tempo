@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	<application>
+		<resource-bundle>
+			<base-name>com.cromasoft.cromaflow.web.bean.resources.Errors</base-name>
+			<var>errorBeanSNR</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cromasoft.cromaflow.web.bean.resources.Messages</base-name>
+			<var>messageBeanSNR</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cromasoft.cromaflow.web.bean.resources.Tooltips</base-name>
+			<var>tooltipBeanSNR</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>es</default-locale>
+		</locale-config>
+		<view-handler>com.cromasoft.cromaflow.web.bean.handlers.CromaFlowViewHandler</view-handler>
+	</application>
+</faces-config>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtmltransitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+	<ui:composition template="../common/template.xhtml">
+		<ui:define name="migaPan">
+			<nav aria-label="breadcrumb nav navbar-nav navbar-right">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelProcesos}" /></li>
+				<li class="breadcrumb-item"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelRevisionTomografias}" /></li>
+				<li class="breadcrumb-item active" aria-current="page"><p:outputLabel
+						value="#{messageBeanSNR.commonLabelRevisionTomografiasDetalle}" /></li>
+			</ol>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false"
+				appendTo="@(body)">
+				<p:graphicImage value="/images/ajaxloadingbar.gif" />
+			</p:dialog>
+			<h:form id="fRevisionTomografiasDetalle" style="width: 100%;"
+				enctype="multipart/form-data" onkeypress="return event.keyCode!=13">
+				<p:growl id="idGrowl" globalOnly="true" showDetail="true"
+					sticky="false" life="10000" redisplay="false" />
+
+				<p:panel header="#{messageBeanSNR.commonLabelRevisionTomografias}"
+					closable="false" style="text-align: center;">
+
+					<!-- Panel datos basicos -->
+					<p:panel
+						header="#{messageBeanSNR.commonLabelDatosBasicosSolicitud}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olNumeroSolicitud"
+											value="#{messageBeanSNR.commonLabelNumeroDeLaSolicitud}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otnumeroSolicitud" readonly="true"
+											value="#{beanRevisionTomografias.solicitud.numeroSolicitud}" />
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaTomografia"
+											value="#{messageBeanSNR.commonLabelFechaTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaTomografia" readonly="true"
+											value="#{beanRevisionTomografias.itemSeleccionado.fechaTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaVencimientoTomografia"
+											value="#{messageBeanSNR.commonLabelFechaVencimientoTomografia}" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otFechaVencimientoTomografia" readonly="true"
+											value="#{beanRevisionTomografias.itemSeleccionado.fechaVencimientoTomografia}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5" />
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel zona a tratar -->
+					<p:panel header="#{messageBeanSNR.commonLabelZonaTratar}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-3 ui-md-3 ui-lg-3">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="otzonaTratar" readonly="true"
+											value="#{beanRevisionTomografias.solicitud.zonaTratar}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel Observaciones etapa anterior -->
+					<p:panel
+						header="#{messageBeanSNR.commonLabelObservacionesEtapaAnterior}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important; width: 100%;">
+								<div class="ui-g-12 ui-md-12 ui-lg-12">
+									<p:inputText id="otObservacionesEtapaAnterior" readonly="true"
+										style="width: 100%; min-height: 80px"
+										value="#{beanRevisionTomografias.itemSeleccionado.observaciones}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel validacion tomografia-->
+					<p:panel header="#{messageBeanSNR.commonLabelValidacionTomografia}"
+						style="text-align:center;">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olTAC" value="TAC:" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itTAC" readonly="true"
+											title="#{tooltipBeanSNR.procesosRevisionTomografiasTAC}"
+											value="#{beanRevisionTomografias.archivoSolicitud.idDocumentoSalida} - #{beanRevisionTomografias.archivoSolicitud.nombreArchivo}" />
+									</div>
+								</div>
+
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olKVP" value="KVP:" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputNumber id="ItKVP" symbol=" Kw" symbolPosition="s"
+											emptyValue="empty"
+											title="#{tooltipBeanSNR.procesosRevisionTomografiasKVP}"
+											value="#{beanRevisionTomografias.tomografia.potencia}" />
+									</div>
+								</div>
+
+								<div class="ui-g-4 ui-md-4 ui-lg-4">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olCorte" value="Corte:" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputNumber id="ItCorte" symbol=" mm" symbolPosition="s"
+											emptyValue="empty"
+											title="#{tooltipBeanSNR.procesosRevisionTomografiasCorte}"
+											value="#{beanRevisionTomografias.tomografia.corte}" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12"
+								style="text-align: left !important;">
+								<div class="ui-g-6 ui-md-6 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olFechaFechaDigitalizacion"
+											value="Fecha Digitalización:" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:calendar id="idCalFechaDigitalizacion" size="10"
+											mask="true"
+											title="#{tooltipBeanSNR.procesosRevisionTomografiasFechaDigitalizacion}"
+											locale="es" placeholder="DD/MM/AAAA" pattern="dd/MM/yyyy"
+											value="#{beanRevisionTomografias.tomografia.fechaDigitalizacion}"
+											showOn="button" />
+									</div>
+								</div>
+								<div class="ui-g-6 ui-md-6 ui-lg-6">
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:outputLabel id="olVisor" value="Visor:" />
+									</div>
+									<div class="ui-g-12 ui-md-12 ui-lg-12">
+										<p:inputText id="itVisor"
+											title="#{tooltipBeanSNR.procesosRevisionTomografiasVisor}"
+											value="#{beanRevisionTomografias.tomografia.visor}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel decision etapa -->
+					<p:panel toggleable="true"
+						header="#{messageBeanSNR.commonLabelDesicionEtapa}"
+						style="text-align:center">
+						<div class="ui-g" align="center">
+							<div align="center" class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:selectOneRadio layout="responsive" columns="2"
+									style="text-align: initial;width:100%;"
+									value="#{beanRevisionTomografias.decisionEtapa}"
+									styleClass="ui-selectoneradiosinnegrilla">
+									<f:selectItem itemValue="A" itemLabel="Aprobado" />
+									<f:selectItem itemValue="D" itemLabel="Devolución" />
+									<p:ajax event="click"
+										update="idOPObservaciones, idOPCausalDevolucion, opBotones" />
+								</p:selectOneRadio>
+							</div>
+						</div>
+					</p:panel>
+
+					<br />
+
+					<!-- Panel causal devolucion y observaciones -->
+					<p:outputPanel id="idOPObservaciones">
+						<p:outputPanel id="idOPCausalDevolucion"
+							rendered="#{beanRevisionTomografias.decisionEtapa eq 'D'}">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-6 ui-lg-4">
+									<p:outputLabel indicateRequired="true"
+										value="#{messageBeanSNR.commonLabelCausalDevolucionDosPuntos}" />
+									<p:selectOneMenu
+										title="#{tooltipBeanSNR.procesosRevisionTomografiasDetalleMotivosDevolucion}"
+										style="width:100%;" id="idSOMMotivosDevolucion"
+										value="#{beanRevisionTomografias.causalDevolucion}">
+										<f:selectItem
+											itemLabel="#{messageBeanSNR.commonLabelSeleccione}"
+											itemValue="" />
+										<f:selectItems var="causal"
+											value="#{beanRevisionTomografias.causalesDevolucion}"
+											itemLabel="#{causal.etiqueta}" itemValue="#{causal.codigo}">
+										</f:selectItems>
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<div class="ui-g">
+							<br />
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:outputLabel id="idOLObservaciones"
+									value="#{messageBeanSNR.commonLabelObservaciones}"
+									indicateRequired="#{beanRevisionTomografias.decisionEtapa eq 'D'}" />
+								<p:inputTextarea id="idITAObservaciones" rows="10" cols="240"
+									onblur="value=value.toUpperCase()"
+									value="#{beanRevisionTomografias.observaciones}"
+									title="#{tooltipBeanSNR.procesosRevisionTomografiasDetalleObservaciones}"
+									queryDelay="750" maxlength="400" minQueryLength="4"
+									counterTemplate="{0} #{messageBeanSNR.commonLabelCaracteresRestantes}"
+									counter="idNumeroCaracteres1" />
+								<p:outputPanel>
+									<div align="right">
+										<h:outputText id="idNumeroCaracteres1" />
+									</div>
+								</p:outputPanel>
+							</div>
+						</div>
+					</p:outputPanel>
+
+					<br />
+
+					<!-- Panel botones -->
+					<p:outputPanel id="opBotones">
+						<div class="ui-g">
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: left !important;">
+
+								<p:commandButton value="#{messageBeanSNR.commonButtonRegresar}"
+									icon="fa fa-arrow-circle-left" iconPos="left"
+									action="#{beanRevisionTomografias.volverBandeja}" />
+								<p:spacer />
+							</div>
+							<div class="ui-g-6 ui-md-6 ui-lg-6"
+								style="text-align: right !important;">
+								<p:commandButton
+									rendered="#{beanRevisionTomografias.decisionEtapa eq 'A'}"
+									value="#{messageBeanSNR.commonButtonRevisado}"
+									icon="fa fa-check"
+									action="#{beanRevisionTomografias.salvarBandeja}"
+									update="idGrowl" />
+								<p:commandButton
+									rendered="#{beanRevisionTomografias.decisionEtapa eq 'D'}"
+									icon="fa fa-check"
+									value="#{messageBeanSNR.commonButtonDevolver}"
+									onclick="PF('dlgConfirmacionDevolucion').show();" />
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:panel>
+			</h:form>
+
+			<!-- Dialog de confirmacion de devolucion etapa 205 -->
+			<p:dialog appendTo="@(body)"
+				header="#{messageBeanSNR.commonLabelConfirmacion}"
+				widgetVar="dlgConfirmacionDevolucion" modal="true" height="90"
+				resizable="false">
+				<h:form id="dlgConfirmacionDevolucion"
+					style="font-size: large; top: 50%; left: 50%;">
+					<h:outputText
+						value="#{messageBeanSNR.commonLabelEstaSeguroDevolucion}" />
+					<br />
+					<br />
+					<div align="center">
+						<p:commandButton value="#{messageBeanSNR.commonSi}"
+							icon="fa fa-check" update="fRevisionTomografiasDetalle"
+							action="#{beanRevisionTomografias.salvarBandeja}"
+							oncomplete="PF('dlgConfirmacionDevolucion').hide();" />
+						<p:spacer />
+						<p:commandButton value="#{messageBeanSNR.commonNo}"
+							icon="fa fa-close"
+							onclick="PF('dlgConfirmacionDevolucion').hide();" />
+					</div>
+				</h:form>
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

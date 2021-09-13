@@ -1,0 +1,8 @@
+<project name="Build" default="all" basedir=".">
+	<property name="deploy.dir" location="C:\glassfish5\glassfish\domains\domain1" />
+	<target name="all" depends="borrarDespliegues" />
+	<target name="borrarDespliegues">
+		<delete dir="${deploy.dir}\applications\OPEAR\" verbose="true" />
+		<delete dir="${deploy.dir}\autodeploy\" verbose="true" />
+	</target>
+</project>

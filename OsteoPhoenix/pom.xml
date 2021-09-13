@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cromasoft</groupId>
+  <artifactId>ostheoPhoenix</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>../OPBusiness</module>
+  	<module>../OPCommon</module>
+  	<module>../OPDao</module>
+  	<module>../OPDelegate</module>
+  	<module>../OPEAR</module>
+  	<module>../OPEJB</module>
+  	<module>../OPEJBClient</module>
+  	<module>../OPModel</module>
+  	<module>../OPWEB</module>
+  	<module>../OPScheduler</module>
+  	<module>../OPConfig</module>
+  	<module>OPScheduler</module>
+  </modules>
+</project>
